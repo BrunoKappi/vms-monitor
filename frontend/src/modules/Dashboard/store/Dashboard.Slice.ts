@@ -3,6 +3,25 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import type { DashboardState, CameraUI } from '../types/Dashboard.Types';
 import { DashboardService } from '../services/Dashboard.Service';
 
+const applyLayoutOrdering = (cameras: CameraUI[], layout: string): CameraUI[] => {
+  const savedOrderJson = localStorage.getItem(`vms_order_${layout}`);
+  if (!savedOrderJson) return cameras;
+  try {
+    const savedIds: string[] = JSON.parse(savedOrderJson);
+    return [...cameras].sort((a, b) => {
+      const idxA = savedIds.indexOf(a.id);
+      const idxB = savedIds.indexOf(b.id);
+      if (idxA === -1 && idxB === -1) return 0;
+      if (idxA === -1) return 1;
+      if (idxB === -1) return -1;
+      return idxA - idxB;
+    });
+  } catch (e) {
+    console.error('Error parsing layout ordering:', e);
+    return cameras;
+  }
+};
+
 const initialState: DashboardState = {
   cameras: [],
   activeStreams: [],
@@ -83,6 +102,7 @@ const dashboardSlice = createSlice({
     setGridLayout: (state, action: PayloadAction<'grid_2x2' | 'grid_3x3' | 'grid_4x4' | 'destaque_3x3' | 'destaque_4x4'>) => {
       state.gridLayout = action.payload;
       localStorage.setItem('vms_grid_layout', action.payload);
+      state.cameras = applyLayoutOrdering(state.cameras, action.payload);
     },
     startStream: (state, action: PayloadAction<string>) => {
       if (!state.activeStreams.includes(action.payload)) {
@@ -103,9 +123,10 @@ const dashboardSlice = createSlice({
     builder
       // Fetch stored cameras
       .addCase(fetchStoredCameras.fulfilled, (state, action: PayloadAction<CameraUI[]>) => {
-        state.cameras = action.payload;
+        const ordered = applyLayoutOrdering(action.payload, state.gridLayout);
+        state.cameras = ordered;
         // Automatically start streams for all online cameras on load!
-        state.activeStreams = action.payload
+        state.activeStreams = ordered
           .filter(c => c.status === 'online')
           .map(c => c.id);
         state.error = null;
@@ -120,9 +141,10 @@ const dashboardSlice = createSlice({
       })
       .addCase(discoverCameras.fulfilled, (state, action: PayloadAction<CameraUI[]>) => {
         state.isDiscovering = false;
-        state.cameras = action.payload;
+        const ordered = applyLayoutOrdering(action.payload, state.gridLayout);
+        state.cameras = ordered;
         // Automatically start streams for all online discovered cameras!
-        state.activeStreams = action.payload
+        state.activeStreams = ordered
           .filter(c => c.status === 'online')
           .map(c => c.id);
       })
@@ -138,6 +160,8 @@ const dashboardSlice = createSlice({
         } else {
           state.cameras.push(action.payload);
         }
+        // Preserve VMS camera ordering after adding a new camera
+        state.cameras = applyLayoutOrdering(state.cameras, state.gridLayout);
         // Auto start stream for newly added online camera!
         if (action.payload.status === 'online' && !state.activeStreams.includes(action.payload.id)) {
           state.activeStreams.push(action.payload.id);

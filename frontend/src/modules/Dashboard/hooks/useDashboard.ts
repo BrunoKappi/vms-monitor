@@ -73,8 +73,11 @@ export const useDashboard = () => {
     // 1. Immediately update local state for ultra-snappy responsiveness
     dispatch(updateCamerasLocal(reorderedCameras));
     
-    // 2. Persist the new sequence in the backend database
+    // 2. Persist the layout-specific camera sequence in localStorage!
     const ids = reorderedCameras.map(c => c.id);
+    localStorage.setItem(`vms_order_${gridLayout}`, JSON.stringify(ids));
+    
+    // 3. Persist the new sequence in the backend database
     dispatch(reorderCameras(ids));
   };
 
