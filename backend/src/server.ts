@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import cameraRoutes from './routes/Camera.Route';
+import systemRoutes from './routes/System.Route';
 import { errorHandlerMiddleware } from './middlewares/Error.Middleware';
 import { StreamService } from './services/Stream.Service';
 import { CONFIG } from './config/App.Config';
@@ -21,6 +22,7 @@ app.use(express.json());
 
 // Mounted REST API endpoints
 app.use('/api/cameras', cameraRoutes);
+app.use('/api/system', systemRoutes);
 
 // 404 Route handler fallback
 app.use((req, res) => {

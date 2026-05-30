@@ -1,8 +1,9 @@
 import axios from 'axios';
 import type { CameraUI } from '../types/Dashboard.Types';
+import { DASHBOARD_CONSTANTS } from '../constants/Dashboard.Constants';
 
 const api = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: DASHBOARD_CONSTANTS.BACKEND_URL,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -42,5 +43,9 @@ export class DashboardService {
   public static async controlPtz(id: string, direction: string, speed?: number): Promise<any> {
     const response = await api.post(`/cameras/${id}/ptz`, { direction, speed });
     return response.data;
+  }
+
+  public static async shutdownSystem(): Promise<void> {
+    await api.post('/system/shutdown');
   }
 }

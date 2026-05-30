@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Play, Square, Camera, ZoomIn } from 'lucide-react';
 import type { CameraUI } from '../types/Dashboard.Types';
+import { DASHBOARD_CONSTANTS } from '../constants/Dashboard.Constants';
 
 interface CameraCardProps {
   camera: CameraUI;
@@ -40,7 +41,7 @@ export const CameraCard: React.FC<CameraCardProps> = ({
     // Initialize JSMpeg Player when stream is active
     if (isActive && canvasRef.current && !playerRef.current) {
       setIsPlaying(true);
-      const wsUrl = `ws://localhost:9999/stream/${camera.id}`;
+      const wsUrl = `${DASHBOARD_CONSTANTS.WS_STREAM_URL}/${camera.id}`;
       
       const JSMpeg = (window as any).JSMpeg;
       if (JSMpeg) {

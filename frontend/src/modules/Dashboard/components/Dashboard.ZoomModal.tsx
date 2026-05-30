@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { X, Camera, Maximize2, ArrowUp, ArrowDown, ArrowLeft, ArrowRight, Square } from 'lucide-react';
 import type { CameraUI } from '../types/Dashboard.Types';
 import { DashboardService } from '../services/Dashboard.Service';
+import { DASHBOARD_CONSTANTS } from '../constants/Dashboard.Constants';
 
 interface ZoomModalProps {
   camera: CameraUI;
@@ -25,7 +26,7 @@ export const ZoomModal: React.FC<ZoomModalProps> = ({
 
     if (canvasRef.current && !playerRef.current) {
       setIsPlaying(true);
-      const wsUrl = `ws://localhost:9999/stream/${camera.id}`;
+      const wsUrl = `${DASHBOARD_CONSTANTS.WS_STREAM_URL}/${camera.id}`;
       
       const JSMpeg = (window as any).JSMpeg;
       if (JSMpeg) {

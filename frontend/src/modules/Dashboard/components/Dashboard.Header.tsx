@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Radio, Languages, Video, LayoutList, Maximize, Minimize } from 'lucide-react';
+import { Radio, Languages, Video, LayoutList, Maximize, Minimize, Power } from 'lucide-react';
 
 interface HeaderProps {
   isDiscovering: boolean;
   activeTab: 'live' | 'manage';
   onDiscover: () => void;
   onTabChange: (tab: 'live' | 'manage') => void;
+  onShutdown: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -14,6 +15,7 @@ export const Header: React.FC<HeaderProps> = ({
   activeTab,
   onDiscover,
   onTabChange,
+  onShutdown,
 }) => {
   const { t, i18n } = useTranslation();
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -115,6 +117,15 @@ export const Header: React.FC<HeaderProps> = ({
           title="Switch Language"
         >
           <Languages className="w-4 h-4" />
+        </button>
+
+        {/* Compact Shutdown VMS System Trigger */}
+        <button
+          onClick={onShutdown}
+          className="p-2 bg-red-950/20 border border-red-500/20 hover:border-red-500 hover:bg-red-500/10 text-red-400 hover:text-white rounded-lg transition-all cursor-pointer"
+          title="Desligar e Encerrar Servidores VMS"
+        >
+          <Power className="w-4 h-4" />
         </button>
       </div>
     </header>

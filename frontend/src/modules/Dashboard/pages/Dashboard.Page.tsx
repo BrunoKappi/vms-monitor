@@ -5,10 +5,12 @@ import { Grid } from '../components/Dashboard.Grid';
 import { Table } from '../components/Dashboard.Table';
 import { ZoomModal } from '../components/Dashboard.ZoomModal';
 import { Eye, ShieldAlert, ChevronUp, ChevronDown } from 'lucide-react';
+import { DashboardService } from '../services/Dashboard.Service';
 
 export const DashboardPage: React.FC = () => {
   const [zoomedCameraId, setZoomedCameraId] = useState<string | null>(null);
   const [isFooterExpanded, setIsFooterExpanded] = useState(false);
+  const [isShuttingDown, setIsShuttingDown] = useState(false);
 
   const {
     cameras,
@@ -32,8 +34,47 @@ export const DashboardPage: React.FC = () => {
     handleDiscover();
   }, []);
 
+  const handleShutdown = async () => {
+    const confirmShutdown = window.confirm(
+      "Deseja realmente encerrar a Central VMS? Todos os servidores em segundo plano serão desligados e as portas do PC serão liberadas."
+    );
+    if (!confirmShutdown) return;
+
+    setIsShuttingDown(true);
+    try {
+      await DashboardService.shutdownSystem();
+    } catch (err) {
+      console.error("Erro ao solicitar desligamento do sistema:", err);
+    }
+  };
+
   // Find camera currently requested for zoomed fullscreen popup
   const zoomedCamera = cameras.find(c => c.id === zoomedCameraId);
+
+  if (isShuttingDown) {
+    return (
+      <div className="min-h-screen bg-[#060608] text-white flex flex-col items-center justify-center font-sans p-6 relative overflow-hidden">
+        {/* Neon Background Glows */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-red-500/5 rounded-full blur-[120px] pointer-events-none" />
+        
+        <div className="glass rounded-3xl p-8 max-w-md w-full border border-white/10 shadow-2xl flex flex-col items-center text-center relative z-10 animate-scaleUp">
+          <div className="w-16 h-16 rounded-full bg-red-500/10 border border-red-500/30 flex items-center justify-center mb-6">
+            <span className="w-6 h-6 rounded-full border-2 border-red-500 border-t-transparent animate-spin" />
+          </div>
+          <h2 className="text-xl font-bold text-white/95 font-mono mb-2">Encerrando Central VMS</h2>
+          <p className="text-sm text-mutedText leading-relaxed mb-6">
+            Os servidores de vídeo e processos em segundo plano estão sendo desativados. As portas de rede do seu PC foram liberadas com sucesso.
+          </p>
+          <div className="w-full bg-white/5 border border-white/10 rounded-2xl py-3 px-4 text-xs text-red-400 font-mono font-bold animate-pulse">
+            SISTEMA ENCERRADO COM SEGURANÇA
+          </div>
+          <p className="text-[10px] text-mutedText/60 mt-4">
+            Você pode fechar esta aba do navegador agora.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background text-white/90 p-4 md:p-6 flex flex-col font-sans pb-24">
@@ -50,6 +91,7 @@ export const DashboardPage: React.FC = () => {
           activeTab={activeTab}
           onDiscover={handleDiscover}
           onTabChange={handleSetTab}
+          onShutdown={handleShutdown}
         />
 
         {/* Global Error Banner Display */}
