@@ -1,4 +1,4 @@
-# Script para baixar e instalar o FFmpeg localmente no projeto CamerasLive
+﻿# Script para baixar e instalar o FFmpeg localmente no projeto CamerasLive
 $ErrorActionPreference = "Stop"
 
 $zipUrl = "https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-essentials.zip"
@@ -37,14 +37,14 @@ try {
     if ($ffmpegExe) {
         Copy-Item -Path $ffmpegExe.FullName -Destination "$binDir/ffmpeg.exe" -Force
         Write-Host ""
-        Write-Host "✔ FFmpeg instalado localmente com sucesso em: $binDir/ffmpeg.exe" -ForegroundColor Green
+        Write-Host "v FFmpeg instalado localmente com sucesso em: $binDir/ffmpeg.exe" -ForegroundColor Green
     } else {
         throw "Nao foi possivel encontrar o arquivo ffmpeg.exe dentro do pacote extraido."
     }
 }
 catch {
     Write-Host ""
-    Write-Host "❌ [ERRO] Ocorreu uma falha na instalacao automatica do FFmpeg:" -ForegroundColor Red
+    Write-Host "[ERRO] Ocorreu uma falha na instalacao automatica do FFmpeg:" -ForegroundColor Red
     Write-Host $_.Exception.Message -ForegroundColor Red
     Write-Host "Por favor, tente rodar este script novamente ou faca a instalacao manual."
 }
