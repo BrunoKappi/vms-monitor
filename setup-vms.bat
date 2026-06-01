@@ -60,6 +60,14 @@ echo  v FFmpeg detectado no PATH do sistema.
 echo.
 
 :START_INSTALL
+:: Configurar arquivo de variaveis de ambiente (.env) para o backend
+if not exist "backend\.env" (
+    if exist "backend\.env.example" (
+        echo [INFO] Criando arquivo backend\.env a partir de .env.example...
+        copy "backend\.env.example" "backend\.env" >nul
+    )
+)
+
 :: 3. Instalar dependencias da raiz
 echo [3/4] Instalando dependencias da raiz (Workspace)...
 cd /d "%~dp0"

@@ -18,20 +18,54 @@ async function loadOnvifLib() {
   return { Onvif, Discovery };
 }
 
-// Dynamically detects the local network IPv4 subnet
+// Dynamically detects the local network IPv4 subnet with priority-based physical interface detection
 function getLocalSubnet(): string {
   const interfaces = os.networkInterfaces();
+  const candidates: { subnet: string; priority: number }[] = [];
+
   for (const name of Object.keys(interfaces)) {
+    const lowerName = name.toLowerCase();
+    
+    // Detect and heavily deprioritize virtual adapters (WSL, Docker, VirtualBox, VMware, VPNs, etc.)
+    const isVirtual = lowerName.includes('wsl') || 
+                      lowerName.includes('docker') || 
+                      lowerName.includes('virtual') || 
+                      lowerName.includes('vbox') || 
+                      lowerName.includes('vmware') || 
+                      lowerName.includes('host-only') ||
+                      lowerName.includes('vethernet');
+
     for (const iface of interfaces[name] || []) {
       if (iface.family === 'IPv4' && !iface.internal) {
         const parts = iface.address.split('.');
-        // Sweep standard home private networks
-        if (parts[0] === '192' || parts[0] === '10' || parts[0] === '172') {
-          return `${parts[0]}.${parts[1]}.${parts[2]}`;
+        const firstOctet = parts[0];
+        
+        if (firstOctet === '192' || firstOctet === '10' || firstOctet === '172') {
+          const subnet = `${parts[0]}.${parts[1]}.${parts[2]}`;
+          
+          // Determine priority (192.168.x.x home network gets highest priority, virtual networks are bottom-tier)
+          let priority = 0;
+          if (firstOctet === '192') priority = 100;
+          else if (firstOctet === '10') priority = 90;
+          else if (firstOctet === '172') priority = 80;
+
+          if (isVirtual) {
+            priority -= 200; // Deprioritize heavily to place at the absolute bottom
+          }
+
+          candidates.push({ subnet, priority });
         }
       }
     }
   }
+
+  if (candidates.length > 0) {
+    // Sort by priority descending
+    candidates.sort((a, b) => b.priority - a.priority);
+    console.log('Subnet sweep candidates found:', candidates);
+    return candidates[0].subnet;
+  }
+
   return '192.168.1'; // Fallback subnet
 }
 
