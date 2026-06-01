@@ -33,10 +33,13 @@ function getLocalSubnet(): string {
                       lowerName.includes('vbox') || 
                       lowerName.includes('vmware') || 
                       lowerName.includes('host-only') ||
-                      lowerName.includes('vethernet');
+                      lowerName.includes('vethernet') ||
+                      lowerName.includes('hyper-v') ||
+                      lowerName.includes('hyperv') ||
+                      lowerName.includes('vpn');
 
     for (const iface of interfaces[name] || []) {
-      if (iface.family === 'IPv4' && !iface.internal) {
+      if ((iface.family === 'IPv4' || (iface.family as any) === 4 || (iface.family as any) === '4') && !iface.internal) {
         const parts = iface.address.split('.');
         const firstOctet = parts[0];
         
