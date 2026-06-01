@@ -1,11 +1,18 @@
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
+import path from 'path';
 import cameraRoutes from './routes/Camera.Route';
 import systemRoutes from './routes/System.Route';
 import { errorHandlerMiddleware } from './middlewares/Error.Middleware';
 import { StreamService } from './services/Stream.Service';
 import { CONFIG } from './config/App.Config';
+
+// Prepend local bin directories to process.env.PATH so spawned binaries (like ffmpeg) can be resolved locally
+const localBinPath = path.join(__dirname, '../bin');
+const rootBinPath = path.join(__dirname, '../../bin');
+const envSeparator = process.platform === 'win32' ? ';' : ':';
+process.env.PATH = `${localBinPath}${envSeparator}${rootBinPath}${envSeparator}${process.env.PATH}`;
 
 const app = express();
 

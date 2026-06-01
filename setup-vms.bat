@@ -33,11 +33,26 @@ echo [2/4] Verificando se o FFmpeg esta instalado...
 where ffmpeg >nul 2>nul
 if %errorlevel% equ 0 goto FFMPEG_INSTALLED
 
+if exist "backend\bin\ffmpeg.exe" goto FFMPEG_LOCAL_OK
+
 echo.
 echo ⚠️ [AVISO] FFmpeg nao foi encontrado no PATH do seu sistema!
 echo O FFmpeg eh fundamental para que a transcodificacao de streams RTSP funcione.
 echo.
-echo Para instalar no Windows:
+set /p FFMPEG_AUTO="Deseja baixar e instalar o FFmpeg localmente de forma automatica? (S/N): "
+if /i "%FFMPEG_AUTO%" neq "S" goto FFMPEG_MANUAL_WARNING
+
+echo.
+echo [INFO] Iniciando instalador automatico do FFmpeg...
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0install-ffmpeg.ps1"
+if exist "backend\bin\ffmpeg.exe" goto FFMPEG_LOCAL_OK
+
+echo.
+echo ❌ [ERRO] Nao foi possivel instalar o FFmpeg automaticamente.
+echo.
+
+:FFMPEG_MANUAL_WARNING
+echo Para instalar no Windows manualmente:
 echo 1. Baixe o FFmpeg (build completo) em: https://ffmpeg.org/download.html
 echo 2. Extraia os arquivos (ex: em C:\ffmpeg)
 echo 3. Adicione o caminho da pasta bin (ex: C:\ffmpeg\bin) as Variaveis de Ambiente do Sistema (PATH)
@@ -52,6 +67,11 @@ pause
 exit /b 0
 
 :FFMPEG_CONTINUE
+echo.
+goto START_INSTALL
+
+:FFMPEG_LOCAL_OK
+echo  v FFmpeg detectado localmente em backend\bin\ffmpeg.exe.
 echo.
 goto START_INSTALL
 
