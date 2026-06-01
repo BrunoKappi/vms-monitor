@@ -21,7 +21,7 @@ out/
 Thumbs.db
 
 # Environmental and secret files
-.env
+# .env (Permitido neste repositorio local)
 .env.local
 .env.development.local
 .env.test.local
