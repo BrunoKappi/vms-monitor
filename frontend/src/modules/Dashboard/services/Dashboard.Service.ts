@@ -48,4 +48,9 @@ export class DashboardService {
   public static async shutdownSystem(): Promise<void> {
     await api.post('/system/shutdown');
   }
+
+  public static async fetchSystemMetrics(): Promise<any> {
+    const response = await api.get('/system/metrics');
+    return response.data.data;
+  }
 }

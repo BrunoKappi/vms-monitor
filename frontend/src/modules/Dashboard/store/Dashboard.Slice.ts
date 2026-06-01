@@ -112,7 +112,7 @@ const dashboardSlice = createSlice({
     stopStream: (state, action: PayloadAction<string>) => {
       state.activeStreams = state.activeStreams.filter(id => id !== action.payload);
     },
-    setTab: (state, action: PayloadAction<'live' | 'manage'>) => {
+    setTab: (state, action: PayloadAction<'live' | 'manage' | 'resources'>) => {
       state.activeTab = action.payload;
     },
     updateCamerasLocal: (state, action: PayloadAction<CameraUI[]>) => {

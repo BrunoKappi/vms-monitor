@@ -11,12 +11,29 @@ interface StreamSession {
 }
 
 export class StreamService {
+  public static instance: StreamService | null = null;
   private wss: WebSocketServer | null = null;
   private sessions: Map<string, StreamSession> = new Map();
   private repository: CameraRepository;
 
   constructor() {
     this.repository = new CameraRepository();
+    StreamService.instance = this;
+  }
+
+  public getActiveSessionsCount(): number {
+    return this.sessions.size;
+  }
+
+  public getActiveSessionsDetails(): Array<{ cameraId: string; clientCount: number }> {
+    const details: Array<{ cameraId: string; clientCount: number }> = [];
+    this.sessions.forEach((session, cameraId) => {
+      details.push({
+        cameraId,
+        clientCount: session.clients.size
+      });
+    });
+    return details;
   }
 
   // Starts the WebSocket streaming server

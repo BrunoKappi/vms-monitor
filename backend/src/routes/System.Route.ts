@@ -5,6 +5,7 @@ const router = Router();
 const systemController = new SystemController();
 
 // Define express routes and delegate execution to the controller layer
+router.get('/metrics', systemController.getMetrics);
 router.post('/shutdown', systemController.shutdown);
 
 export default router;

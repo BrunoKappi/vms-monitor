@@ -65,7 +65,7 @@ export const useDashboard = () => {
     dispatch(stopStream(cameraId));
   };
 
-  const handleSetTab = (tab: 'live' | 'manage') => {
+  const handleSetTab = (tab: 'live' | 'manage' | 'resources') => {
     dispatch(setTab(tab));
   };
 

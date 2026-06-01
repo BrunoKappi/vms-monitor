@@ -3,6 +3,7 @@ import { useDashboard } from '../hooks/useDashboard';
 import { Header } from '../components/Dashboard.Header';
 import { Grid } from '../components/Dashboard.Grid';
 import { Table } from '../components/Dashboard.Table';
+import { ResourcesView } from '../components/Dashboard.Resources';
 import { ZoomModal } from '../components/Dashboard.ZoomModal';
 import { Eye, ShieldAlert, ChevronUp, ChevronDown } from 'lucide-react';
 import { DashboardService } from '../services/Dashboard.Service';
@@ -105,7 +106,9 @@ export const DashboardPage: React.FC = () => {
         )}
 
         {/* Dynamic Tab Render Area */}
-        {filteredCameras.length > 0 ? (
+        {activeTab === 'resources' ? (
+          <ResourcesView />
+        ) : filteredCameras.length > 0 ? (
           activeTab === 'live' ? (
             <Grid
               cameras={filteredCameras}

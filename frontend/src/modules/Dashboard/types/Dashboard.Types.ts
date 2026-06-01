@@ -20,5 +20,5 @@ export interface DashboardState {
   searchQuery: string;
   gridLayout: 'grid_2x2' | 'grid_3x3' | 'grid_4x4' | 'destaque_3x3' | 'destaque_4x4';
   error: string | null;
-  activeTab: 'live' | 'manage';
+  activeTab: 'live' | 'manage' | 'resources';
 }

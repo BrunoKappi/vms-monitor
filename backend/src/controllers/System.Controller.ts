@@ -8,6 +8,19 @@ export class SystemController {
     this.systemService = new SystemService();
   }
 
+  // Retrieves host and VMS processes resource usage statistics
+  public getMetrics = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const metrics = await this.systemService.getMetrics();
+      res.status(200).json({
+        success: true,
+        data: metrics
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
   // Gracefully shuts down both the Vite frontend server and Express/WS backend processes
   public shutdown = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {

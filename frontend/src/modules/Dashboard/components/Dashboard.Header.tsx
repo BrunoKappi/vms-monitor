@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Radio, Languages, Video, LayoutList, Maximize, Minimize, Power } from 'lucide-react';
+import { Radio, Languages, Video, LayoutList, Maximize, Minimize, Power, Activity } from 'lucide-react';
 import { ThemeToggle } from '../../Theme/components/Theme.Toggle';
 
 interface HeaderProps {
   isDiscovering: boolean;
-  activeTab: 'live' | 'manage';
+  activeTab: 'live' | 'manage' | 'resources';
   onDiscover: () => void;
-  onTabChange: (tab: 'live' | 'manage') => void;
+  onTabChange: (tab: 'live' | 'manage' | 'resources') => void;
   onShutdown: () => void;
 }
 
@@ -83,6 +83,17 @@ export const Header: React.FC<HeaderProps> = ({
         >
           <LayoutList className="w-3.5 h-3.5" />
           Gerenciamento
+        </button>
+        <button
+          onClick={() => onTabChange('resources')}
+          className={`px-4 py-1.5 rounded-lg text-[11px] font-bold flex items-center gap-1.5 transition-all duration-250 ${
+            activeTab === 'resources'
+              ? 'bg-accentViolet text-white shadow-glowViolet/15 font-black'
+              : 'text-mutedText hover:text-slate-900 dark:hover:text-white'
+          }`}
+        >
+          <Activity className="w-3.5 h-3.5" />
+          Recursos
         </button>
       </div>
 

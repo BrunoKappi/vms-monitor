@@ -1,7 +1,76 @@
 import { exec } from 'child_process';
+import os from 'os';
 import { CONFIG } from '../config/App.Config';
+import { StreamService } from './Stream.Service';
 
 export class SystemService {
+  private static startTime = Date.now();
+
+  private getCpuAverage() {
+    const cpus = os.cpus();
+    let idleMs = 0;
+    let totalMs = 0;
+    for (const cpu of cpus) {
+      for (const type in cpu.times) {
+        totalMs += (cpu.times as any)[type];
+      }
+      idleMs += cpu.times.idle;
+    }
+    return {
+      idle: idleMs / cpus.length,
+      total: totalMs / cpus.length
+    };
+  }
+
+  public async getMetrics() {
+    const startMeasure = this.getCpuAverage();
+    await new Promise(resolve => setTimeout(resolve, 80));
+    const endMeasure = this.getCpuAverage();
+    const idleDifference = endMeasure.idle - startMeasure.idle;
+    const totalDifference = endMeasure.total - startMeasure.total;
+    
+    let cpuUsage = 0;
+    if (totalDifference > 0) {
+      cpuUsage = 100 - Math.round((100 * idleDifference) / totalDifference);
+    }
+
+    const totalMem = os.totalmem();
+    const freeMem = os.freemem();
+    const usedMem = totalMem - freeMem;
+    const memPercentage = Math.round((usedMem / totalMem) * 100);
+
+    const cpus = os.cpus();
+    const cpuModel = cpus.length > 0 ? cpus[0].model : 'Unknown Core';
+
+    const activeStreams = StreamService.instance ? StreamService.instance.getActiveSessionsCount() : 0;
+    const activeStreamsDetails = StreamService.instance ? StreamService.instance.getActiveSessionsDetails() : [];
+
+    return {
+      cpu: {
+        usage: cpuUsage,
+        cores: cpus.length,
+        model: cpuModel
+      },
+      memory: {
+        total: totalMem,
+        free: freeMem,
+        used: usedMem,
+        percentage: memPercentage,
+        processRss: process.memoryUsage().rss
+      },
+      os: {
+        platform: os.platform(),
+        release: os.release(),
+        uptime: os.uptime()
+      },
+      vms: {
+        uptime: Math.floor((Date.now() - SystemService.startTime) / 1000),
+        activeStreams,
+        activeStreamsDetails
+      }
+    };
+  }
+
   public async shutdown(): Promise<void> {
     console.log('VMS System Shutdown requested.');
 
