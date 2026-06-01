@@ -1,32 +1,61 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --background: #f1f5f9;
+  --text-color: #0f172a;
+  --card-bg: rgba(255, 255, 255, 0.7);
+  --card-border: rgba(15, 23, 42, 0.08);
+  --text-muted: #64748b;
+  
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(15, 23, 42, 0.08);
+  --glass-panel-bg: rgba(241, 245, 249, 0.65);
+  --glass-panel-border: rgba(15, 23, 42, 0.05);
+}
+
+.dark {
+  --background: #08090c;
+  --text-color: #f3f4f6;
+  --card-bg: rgba(17, 18, 24, 0.75);
+  --card-border: rgba(255, 255, 255, 0.08);
+  --text-muted: #9ca3af;
+  
+  --glass-bg: rgba(17, 18, 24, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-panel-bg: rgba(13, 14, 18, 0.65);
+  --glass-panel-border: rgba(255, 255, 255, 0.05);
+}
+
 body {
   margin: 0;
   padding: 0;
-  background-color: #08090c;
-  color: #f3f4f6;
+  background-color: var(--background);
+  color: var(--text-color);
   font-family: 'Inter', sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Glassmorphism custom styling utilities */
 .glass {
-  background: rgba(17, 18, 24, 0.75);
+  background: var(--glass-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--glass-border);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .glass-panel {
-  background: rgba(13, 14, 18, 0.65);
+  background: var(--glass-panel-bg);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-panel-border);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 /* Beautiful custom scrollbar */
@@ -36,11 +65,12 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #08090c;
+  background: var(--background);
+  transition: background-color 0.3s ease;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(124, 58, 237, 0.15);
   border-radius: 4px;
 }
 

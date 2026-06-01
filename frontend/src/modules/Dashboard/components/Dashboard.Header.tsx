@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Radio, Languages, Video, LayoutList, Maximize, Minimize, Power } from 'lucide-react';
+import { ThemeToggle } from '../../Theme/components/Theme.Toggle';
 
 interface HeaderProps {
   isDiscovering: boolean;
@@ -52,7 +53,7 @@ export const Header: React.FC<HeaderProps> = ({
           <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accentViolet animate-pulse"></span>
         </span>
         <div>
-          <h1 className="text-sm font-extrabold tracking-tight text-white/90 leading-none">
+          <h1 className="text-sm font-extrabold tracking-tight text-slate-900 dark:text-white/90 leading-none">
             {t('dashboard.title')}
           </h1>
           <p className="text-[10px] text-mutedText/85 mt-0.5 font-mono">{t('dashboard.subtitle')}</p>
@@ -60,13 +61,13 @@ export const Header: React.FC<HeaderProps> = ({
       </div>
 
       {/* Minimalist Navigation tabs */}
-      <div className="flex border border-white/5 rounded-xl overflow-hidden p-0.5 bg-black/45 w-fit shrink-0 shadow-inner">
+      <div className="flex border border-black/5 dark:border-white/5 rounded-xl overflow-hidden p-0.5 bg-black/5 dark:bg-black/45 w-fit shrink-0 shadow-inner">
         <button
           onClick={() => onTabChange('live')}
           className={`px-4 py-1.5 rounded-lg text-[11px] font-bold flex items-center gap-1.5 transition-all duration-250 ${
             activeTab === 'live'
               ? 'bg-accentViolet text-white shadow-glowViolet/15 font-black'
-              : 'text-mutedText hover:text-white'
+              : 'text-mutedText hover:text-slate-900 dark:hover:text-white'
           }`}
         >
           <Video className="w-3.5 h-3.5" />
@@ -77,7 +78,7 @@ export const Header: React.FC<HeaderProps> = ({
           className={`px-4 py-1.5 rounded-lg text-[11px] font-bold flex items-center gap-1.5 transition-all duration-250 ${
             activeTab === 'manage'
               ? 'bg-accentViolet text-white shadow-glowViolet/15 font-black'
-              : 'text-mutedText hover:text-white'
+              : 'text-mutedText hover:text-slate-900 dark:hover:text-white'
           }`}
         >
           <LayoutList className="w-3.5 h-3.5" />
@@ -94,7 +95,7 @@ export const Header: React.FC<HeaderProps> = ({
           className={`flex items-center justify-center p-2 rounded-lg transition-all border duration-200 ${
             isDiscovering
               ? 'bg-accentViolet/25 border-accentViolet/30 text-accentViolet animate-pulse'
-              : 'bg-white/5 border-white/10 hover:border-accentViolet/40 hover:bg-accentViolet/10 text-white/80 hover:text-accentViolet'
+              : 'bg-white/5 border-black/10 dark:border-white/10 hover:border-accentViolet/40 hover:bg-accentViolet/10 text-slate-800 dark:text-white/80 hover:text-accentViolet'
           }`}
           title={isDiscovering ? t('dashboard.actions.discovering') : t('dashboard.actions.discover')}
         >
@@ -104,7 +105,7 @@ export const Header: React.FC<HeaderProps> = ({
         {/* Compact Fullscreen Web view Toggle */}
         <button
           onClick={toggleFullscreen}
-          className="p-2 bg-white/5 border border-white/10 hover:border-accentViolet/40 hover:bg-accentViolet/10 text-white/80 hover:text-accentViolet rounded-lg transition-all"
+          className="p-2 bg-white/5 border border-black/10 dark:border-white/10 hover:border-accentViolet/40 hover:bg-accentViolet/10 text-slate-800 dark:text-white/80 hover:text-accentViolet rounded-lg transition-all"
           title={isFullscreen ? 'Sair da Tela Cheia' : 'Tela Cheia do Site'}
         >
           {isFullscreen ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
@@ -113,11 +114,14 @@ export const Header: React.FC<HeaderProps> = ({
         {/* Compact Language Toggle */}
         <button
           onClick={toggleLanguage}
-          className="p-2 bg-white/5 border border-white/10 hover:border-accentViolet/40 hover:bg-accentViolet/10 text-white/80 hover:text-accentViolet rounded-lg transition-all"
+          className="p-2 bg-white/5 border border-black/10 dark:border-white/10 hover:border-accentViolet/40 hover:bg-accentViolet/10 text-slate-800 dark:text-white/80 hover:text-accentViolet rounded-lg transition-all"
           title="Switch Language"
         >
           <Languages className="w-4 h-4" />
         </button>
+
+        {/* Theme Toggle */}
+        <ThemeToggle />
 
         {/* Compact Shutdown VMS System Trigger */}
         <button

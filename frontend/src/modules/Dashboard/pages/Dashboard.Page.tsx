@@ -77,7 +77,7 @@ export const DashboardPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background text-white/90 p-4 md:p-6 flex flex-col font-sans pb-24">
+    <div className="min-h-screen bg-background text-slate-800 dark:text-white/90 p-4 md:p-6 flex flex-col font-sans pb-24">
       {/* Decorative Widescreen Neon Background Glows */}
       <div className="absolute top-0 left-1/4 w-[400px] h-[400px] bg-accentViolet/5 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-10 right-1/4 w-[350px] h-[350px] bg-accentEmerald/5 rounded-full blur-[100px] pointer-events-none" />
@@ -128,10 +128,10 @@ export const DashboardPage: React.FC = () => {
           )
         ) : (
           <div className="glass rounded-2xl p-16 flex flex-col items-center justify-center text-center mt-6">
-            <div className="p-4 bg-white/5 border border-white/10 rounded-full mb-4">
-              <Eye className="w-8 h-8 text-white/40" />
+            <div className="p-4 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-full mb-4">
+              <Eye className="w-8 h-8 text-slate-400 dark:text-white/40" />
             </div>
-            <h3 className="text-xl font-bold text-white/90 font-mono">No Active Feed Connections</h3>
+            <h3 className="text-xl font-bold text-slate-800 dark:text-white/90 font-mono">No Active Feed Connections</h3>
             <p className="text-sm text-mutedText max-w-sm mt-2">
               There are no cameras currently discovered or manual feeds registered on your subnet. Dynamic Discovery is sweeping the network.
             </p>
@@ -142,8 +142,8 @@ export const DashboardPage: React.FC = () => {
       {activeTab === 'live' && filteredCameras.length > 0 && (
         isFooterExpanded ? (
           // Expanded VMS footer Layout Options
-          <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 glass rounded-2xl p-2 shadow-2xl flex items-center gap-3 animate-scaleUp bg-cardBg/95 border border-white/10 select-none">
-            <span className="text-[10px] text-mutedText uppercase font-extrabold tracking-widest pl-3 pr-2 border-r border-white/10 font-mono">
+          <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 glass rounded-2xl p-2 shadow-2xl flex items-center gap-3 animate-scaleUp bg-cardBg/95 border border-cardBorder select-none">
+            <span className="text-[10px] text-mutedText uppercase font-extrabold tracking-widest pl-3 pr-2 border-r border-black/10 dark:border-white/10 font-mono">
               Layout
             </span>
             <div className="flex gap-1.5">
@@ -152,7 +152,7 @@ export const DashboardPage: React.FC = () => {
                 className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 ${
                   gridLayout === 'grid_2x2'
                     ? 'bg-accentViolet text-white shadow-glowViolet/15 font-black'
-                    : 'text-mutedText hover:text-white hover:bg-white/5'
+                    : 'text-mutedText hover:text-slate-800 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5'
                 }`}
               >
                 Duplo 2x2
@@ -162,7 +162,7 @@ export const DashboardPage: React.FC = () => {
                 className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 ${
                   gridLayout === 'grid_3x3'
                     ? 'bg-accentViolet text-white shadow-glowViolet/15 font-black'
-                    : 'text-mutedText hover:text-white hover:bg-white/5'
+                    : 'text-mutedText hover:text-slate-800 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5'
                 }`}
               >
                 Grid 3x3
@@ -172,7 +172,7 @@ export const DashboardPage: React.FC = () => {
                 className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 ${
                   gridLayout === 'grid_4x4'
                     ? 'bg-accentViolet text-white shadow-glowViolet/15 font-black'
-                    : 'text-mutedText hover:text-white hover:bg-white/5'
+                    : 'text-mutedText hover:text-slate-800 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5'
                 }`}
               >
                 Grid 4x4
@@ -182,7 +182,7 @@ export const DashboardPage: React.FC = () => {
                 className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 ${
                   gridLayout === 'destaque_3x3'
                     ? 'bg-accentViolet text-white shadow-glowViolet/15 font-black'
-                    : 'text-mutedText hover:text-white hover:bg-white/5'
+                    : 'text-mutedText hover:text-slate-800 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5'
                 }`}
               >
                 Destaque 3x3
@@ -192,16 +192,16 @@ export const DashboardPage: React.FC = () => {
                 className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 ${
                   gridLayout === 'destaque_4x4'
                     ? 'bg-accentViolet text-white shadow-glowViolet/15 font-black'
-                    : 'text-mutedText hover:text-white hover:bg-white/5'
+                    : 'text-mutedText hover:text-slate-800 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5'
                 }`}
               >
                 Destaque 4x4
               </button>
             </div>
-            <div className="border-l border-white/10 pl-2 pr-1 flex items-center">
+            <div className="border-l border-black/10 dark:border-white/10 pl-2 pr-1 flex items-center">
               <button
                 onClick={() => setIsFooterExpanded(false)}
-                className="p-1 rounded-lg hover:bg-white/5 text-mutedText hover:text-white transition-colors"
+                className="p-1 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 text-mutedText hover:text-slate-800 dark:hover:text-white transition-colors"
                 title="Minimizar Painel"
               >
                 <ChevronDown className="w-4 h-4" />
@@ -212,9 +212,9 @@ export const DashboardPage: React.FC = () => {
           // Collapsed minimal visual layout tab
           <div
             onClick={() => setIsFooterExpanded(true)}
-            className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 glass rounded-full px-4 py-2 shadow-2xl flex items-center gap-2.5 cursor-pointer bg-cardBg/90 border border-white/10 hover:border-accentViolet/50 transition-all duration-300 hover:scale-105 select-none hover:bg-cardBg"
+            className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 glass rounded-full px-4 py-2 shadow-2xl flex items-center gap-2.5 cursor-pointer bg-cardBg/90 border border-cardBorder hover:border-accentViolet/50 transition-all duration-300 hover:scale-105 select-none hover:bg-cardBg"
           >
-            <span className="text-[10px] text-white/95 uppercase font-extrabold tracking-widest font-mono">
+            <span className="text-[10px] text-slate-800 dark:text-white/95 uppercase font-extrabold tracking-widest font-mono">
               Layouts
             </span>
             <span className="w-1.5 h-1.5 rounded-full bg-accentViolet animate-pulse" />

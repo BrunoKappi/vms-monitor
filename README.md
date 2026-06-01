@@ -77,24 +77,40 @@ CamerasLive/
 
 ## 🚀 Como Rodar o Projeto
 
-### Pré-requisitos:
-* **Node.js** v18+ instalado.
-* **FFmpeg** instalado na máquina e adicionado às variáveis de ambiente (PATH).
+### 📋 Pré-requisitos:
+1. **Node.js** v18+ instalado.
+2. **FFmpeg** instalado na máquina e adicionado às variáveis de ambiente (PATH).
+   - *No Windows:* Baixe o FFmpeg, extraia a pasta, copie o caminho da subpasta `bin` (ex: `C:\ffmpeg\bin`) e adicione-o às Variáveis de Ambiente do Sistema em "Path".
+   - *No Linux/macOS:* Instale via gerenciador de pacotes (`sudo apt install ffmpeg` ou `brew install ffmpeg`).
 
-### Instalação & Execução:
+---
 
-1. **Configurar o Backend:**
+### 💻 Instalação & Inicialização Rápida (Recomendado)
+
+O projeto está unificado em um Workspace integrado. Você pode configurar e rodar tudo com comandos simples na raiz do projeto:
+
+1. **Instalar dependências da raiz:**
    ```bash
-   cd backend
    npm install
+   ```
+
+2. **Instalar dependências de todos os submódulos (Frontend + Backend):**
+   ```bash
+   npm run install-all
+   ```
+
+3. **Iniciar os servidores em paralelo (Vite + Express):**
+   ```bash
    npm run dev
    ```
 
-2. **Configurar o Frontend:**
-   ```bash
-   cd ../frontend
-   npm install
-   npm run dev
-   ```
+Abra o navegador em [http://localhost:42100](http://localhost:42100) para acessar a central VMS do **CamerasLive**.
 
-Abra o navegador em `http://localhost:5173` para acessar a central VMS do **CamerasLive**.
+---
+
+### ⚡ Inicialização Automatizada via Windows Script
+
+Para facilitar ainda mais a execução no dia a dia no Windows, você pode utilizar os scripts em lote da pasta raiz:
+
+* **[start-vms.bat](file:///c:/Users/Bruno/Desktop/Projetos/Pessoais/CamerasLive/start-vms.bat):** Dá dois cliques para instalar/iniciar automaticamente todos os servidores em uma única janela do terminal e abrir o painel de monitoramento no navegador padrão.
+* **[stop-vms.bat](file:///c:/Users/Bruno/Desktop/Projetos/Pessoais/CamerasLive/stop-vms.bat):** Encerra todos os processos de transcodificação e servidores de vídeo, liberando completamente as portas de rede utilizadas do seu PC.
