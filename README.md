@@ -75,7 +75,7 @@ CamerasLive/
 
 ---
 
-## 🚀 Como Rodar o Projeto
+## 🚀 Como Rodar o Projeto (Passo a Passo)
 
 ### 📋 Pré-requisitos:
 1. **Node.js** v18+ instalado.
@@ -85,32 +85,42 @@ CamerasLive/
 
 ---
 
-### 💻 Instalação & Inicialização Rápida (Recomendado)
+### 💻 Passo a Passo via CMD (Após Clonar o Repositório)
 
-O projeto está unificado em um Workspace integrado. Você pode configurar e rodar tudo com comandos simples na raiz do projeto:
+Se você acabou de clonar o repositório, abra o seu terminal (**CMD** ou **PowerShell**) e execute as etapas abaixo em ordem para configurar e inicializar a central de monitoramento:
 
-1. **Instalar dependências da raiz:**
-   ```bash
+1. **Navegue até a pasta do projeto:**
+   ```cmd
+   cd CamerasLive
+   ```
+
+2. **Instale as dependências da raiz (Workspace):**
+   ```cmd
    npm install
    ```
 
-2. **Instalar dependências de todos os submódulos (Frontend + Backend):**
-   ```bash
+3. **Instale as dependências de todos os submódulos (Frontend + Backend):**
+   ```cmd
    npm run install-all
    ```
 
-3. **Iniciar os servidores em paralelo (Vite + Express):**
-   ```bash
+4. **Inicie os servidores integrados (Vite + Express em paralelo):**
+   ```cmd
    npm run dev
    ```
 
-Abra o navegador em [http://localhost:42100](http://localhost:42100) para acessar a central VMS do **CamerasLive**.
+5. **Acesse o painel do VMS no navegador:**
+   Abra seu navegador e acesse: [http://localhost:42100](http://localhost:42100)
 
 ---
 
-### ⚡ Inicialização Automatizada via Windows Script
+### ⚡ Inicialização Automatizada no Windows (Recomendado)
 
-Para facilitar ainda mais a execução no dia a dia no Windows, você pode utilizar os scripts em lote da pasta raiz:
+Para usuários do Windows, criamos scripts automatizados em lote (`.bat`) que facilitam e agilizam todo o processo:
 
-* **[start-vms.bat](file:///c:/Users/Bruno/Desktop/Projetos/Pessoais/CamerasLive/start-vms.bat):** Dá dois cliques para instalar/iniciar automaticamente todos os servidores em uma única janela do terminal e abrir o painel de monitoramento no navegador padrão.
-* **[stop-vms.bat](file:///c:/Users/Bruno/Desktop/Projetos/Pessoais/CamerasLive/stop-vms.bat):** Encerra todos os processos de transcodificação e servidores de vídeo, liberando completamente as portas de rede utilizadas do seu PC.
+1. **[setup-vms.bat](file:///c:/Users/Bruno/Desktop/Projetos/Pessoais/CamerasLive/setup-vms.bat) (Executar apenas na primeira vez):**
+   Dê um duplo clique neste arquivo para verificar os pré-requisitos do sistema (Node.js e FFmpeg) e instalar automaticamente todas as dependências necessárias para a raiz e submódulos do projeto.
+2. **[start-vms.bat](file:///c:/Users/Bruno/Desktop/Projetos/Pessoais/CamerasLive/start-vms.bat) (Executar para rodar o projeto):**
+   Dê um duplo clique para iniciar os servidores integrados em segundo plano e abrir automaticamente a interface do **CamerasLive** em seu navegador padrão.
+3. **[stop-vms.bat](file:///c:/Users/Bruno/Desktop/Projetos/Pessoais/CamerasLive/stop-vms.bat) (Executar para desligar o projeto):**
+   Dê um duplo clique para parar instantaneamente todos os servidores e processos de transcodificação de streams ativos, liberando as portas de rede do seu PC (`42100`, `42200` e `42300`).
