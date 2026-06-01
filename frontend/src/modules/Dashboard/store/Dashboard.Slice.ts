@@ -30,6 +30,7 @@ const initialState: DashboardState = {
   gridLayout: (localStorage.getItem('vms_grid_layout') as any) || 'destaque_4x4',
   error: null,
   activeTab: 'live',
+  ecoMode: localStorage.getItem('vms_eco_mode') === 'true',
 };
 
 // Async Thunks
@@ -118,6 +119,11 @@ const dashboardSlice = createSlice({
     updateCamerasLocal: (state, action: PayloadAction<CameraUI[]>) => {
       state.cameras = action.payload;
     },
+    toggleEcoMode: (state) => {
+      const newValue = !state.ecoMode;
+      state.ecoMode = newValue;
+      localStorage.setItem('vms_eco_mode', String(newValue));
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -191,7 +197,7 @@ const dashboardSlice = createSlice({
   },
 });
 
-export const { setSearchQuery, setGridLayout, startStream, stopStream, setTab, updateCamerasLocal } = dashboardSlice.actions;
+export const { setSearchQuery, setGridLayout, startStream, stopStream, setTab, updateCamerasLocal, toggleEcoMode } = dashboardSlice.actions;
 export const dashboardReducer = dashboardSlice.reducer;
 export const selectDashboard = (state: { dashboard: DashboardState }) => state.dashboard;
 export const selectFilteredCameras = (state: { dashboard: DashboardState }) => {

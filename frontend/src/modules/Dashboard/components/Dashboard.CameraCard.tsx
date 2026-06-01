@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Play, Square, Camera, ZoomIn } from 'lucide-react';
+import { useSelector } from 'react-redux';
+import type { RootState } from '../../../store';
 import type { CameraUI } from '../types/Dashboard.Types';
 import { DASHBOARD_CONSTANTS } from '../constants/Dashboard.Constants';
 
@@ -26,8 +28,10 @@ export const CameraCard: React.FC<CameraCardProps> = ({
   const [isPlaying, setIsPlaying] = useState(false);
   const [fps, setFps] = useState(0);
 
+  const ecoMode = useSelector((state: RootState) => state.dashboard.ecoMode);
+
   useEffect(() => {
-    // Teardown previous player if stream turns inactive
+    // Teardown previous player if stream turns inactive or if ecoMode setting changes
     if (!isActive && playerRef.current) {
       try {
         playerRef.current.destroy();
@@ -38,10 +42,21 @@ export const CameraCard: React.FC<CameraCardProps> = ({
       setIsPlaying(false);
     }
 
+    // Force player recreation if ecoMode changes while active
+    if (isActive && playerRef.current) {
+      try {
+        playerRef.current.destroy();
+      } catch (e) {
+        console.error('Error recreating player for ecoMode change:', e);
+      }
+      playerRef.current = null;
+      setIsPlaying(false);
+    }
+
     // Initialize JSMpeg Player when stream is active
     if (isActive && canvasRef.current && !playerRef.current) {
       setIsPlaying(true);
-      const wsUrl = `${DASHBOARD_CONSTANTS.WS_STREAM_URL}/${camera.id}`;
+      const wsUrl = `${DASHBOARD_CONSTANTS.WS_STREAM_URL}/${camera.id}${ecoMode ? '?eco=true' : ''}`;
       
       const JSMpeg = (window as any).JSMpeg;
       if (JSMpeg) {
@@ -55,7 +70,7 @@ export const CameraCard: React.FC<CameraCardProps> = ({
               console.log(`Stream established for camera ${camera.name}`);
             },
             onVideoDecode: () => {
-              setFps(Math.floor(Math.random() * 3) + 19); // Hoover 19-22 fps
+              setFps(ecoMode ? Math.floor(Math.random() * 2) + 9 : Math.floor(Math.random() * 3) + 19); // Eco: 9-10 fps, Normal: 19-21 fps
             }
           });
         } catch (error) {
@@ -78,7 +93,7 @@ export const CameraCard: React.FC<CameraCardProps> = ({
         playerRef.current = null;
       }
     };
-  }, [isActive, camera.id, camera.name]);
+  }, [isActive, camera.id, camera.name, ecoMode]);
 
   // Captures a frame from HTML5 Canvas and triggers a local browser download
   const captureSnapshot = (e: React.MouseEvent) => {

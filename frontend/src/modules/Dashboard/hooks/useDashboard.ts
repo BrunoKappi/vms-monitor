@@ -14,13 +14,14 @@ import {
   stopStream,
   setTab,
   updateCamerasLocal,
+  toggleEcoMode,
   selectFilteredCameras
 } from '../store/Dashboard.Slice';
 
 export const useDashboard = () => {
   const dispatch = useDispatch<AppDispatch>();
   
-  const { cameras, activeStreams, isDiscovering, searchQuery, gridLayout, error, activeTab } = useSelector(
+  const { cameras, activeStreams, isDiscovering, searchQuery, gridLayout, error, activeTab, ecoMode } = useSelector(
     (state: RootState) => state.dashboard
   );
 
@@ -69,6 +70,10 @@ export const useDashboard = () => {
     dispatch(setTab(tab));
   };
 
+  const handleToggleEcoMode = () => {
+    dispatch(toggleEcoMode());
+  };
+
   const handleReorderCameras = (reorderedCameras: CameraUI[]) => {
     // 1. Immediately update local state for ultra-snappy responsiveness
     dispatch(updateCamerasLocal(reorderedCameras));
@@ -90,6 +95,7 @@ export const useDashboard = () => {
     gridLayout,
     error,
     activeTab,
+    ecoMode,
     handleDiscover,
     handleAddCamera,
     handleDeleteCamera,
@@ -98,6 +104,7 @@ export const useDashboard = () => {
     handleStartStream,
     handleStopStream,
     handleSetTab,
+    handleToggleEcoMode,
     handleReorderCameras
   };
 };

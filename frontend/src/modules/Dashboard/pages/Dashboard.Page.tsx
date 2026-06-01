@@ -90,6 +90,8 @@ export const DashboardPage: React.FC = () => {
         <Header
           isDiscovering={isDiscovering}
           activeTab={activeTab}
+          ecoMode={ecoMode}
+          onToggleEco={handleToggleEcoMode}
           onDiscover={handleDiscover}
           onTabChange={handleSetTab}
           onShutdown={handleShutdown}

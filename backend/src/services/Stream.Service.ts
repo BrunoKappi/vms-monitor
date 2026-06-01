@@ -8,6 +8,7 @@ interface StreamSession {
   ffmpegProcess: ChildProcess | null;
   clients: Set<WebSocket>;
   rtspUrl: string;
+  isEcoMode?: boolean;
 }
 
 export class StreamService {
@@ -44,9 +45,14 @@ export class StreamService {
     console.log(`WebSocket Stream Server running on ws://localhost:${port}`);
 
     this.wss.on('connection', async (ws: WebSocket, req) => {
-      // Parse camera ID from URL path (e.g., ws://localhost:9999/stream/192_168_1_24)
-      const urlPath = req.url || '';
+      // Parse camera ID and query params from URL path (e.g., /stream/192_168_1_24?eco=true)
+      const rawUrl = req.url || '';
+      const questionMarkIndex = rawUrl.indexOf('?');
+      const urlPath = questionMarkIndex !== -1 ? rawUrl.substring(0, questionMarkIndex) : rawUrl;
+      const queryString = questionMarkIndex !== -1 ? rawUrl.substring(questionMarkIndex + 1) : '';
+
       const cameraId = urlPath.replace('/stream/', '').replace(/^\//, '');
+      const isEcoMode = queryString.includes('eco=true');
 
       if (!cameraId) {
         console.warn('WS Connection rejected: Missing camera ID in URL path.');
@@ -54,7 +60,7 @@ export class StreamService {
         return;
       }
 
-      console.log(`Client requested stream for camera: ${cameraId}`);
+      console.log(`Client requested stream for camera: ${cameraId} | EcoMode: ${isEcoMode}`);
 
       // Lookup camera in the repository to obtain the RTSP URL
       const camera = await this.repository.findById(cameraId);
@@ -71,7 +77,8 @@ export class StreamService {
           cameraId,
           ffmpegProcess: null,
           clients: new Set(),
-          rtspUrl: camera.rtspUrl
+          rtspUrl: camera.rtspUrl,
+          isEcoMode
         };
         this.sessions.set(cameraId, session);
       }
@@ -101,8 +108,11 @@ export class StreamService {
 
   // Spawns FFmpeg to capture RTSP stream and transcode it to MPEG1/MPEG-TS piped to stdout
   private startFfmpeg(session: StreamSession): void {
-    console.log(`Spawning FFmpeg for camera ${session.cameraId}...`);
+    console.log(`Spawning FFmpeg for camera ${session.cameraId} (EcoMode: ${session.isEcoMode})...`);
     console.log(`Source RTSP URL: ${session.rtspUrl}`);
+
+    const fps = session.isEcoMode ? '10' : '20';
+    const resolution = session.isEcoMode ? '480x272' : '854x480';
 
     // Transcode RTSP into MPEG-1 Video inside an MPEG-TS container, piped to stdout
     const ffmpegArgs = [
@@ -111,11 +121,15 @@ export class StreamService {
       '-f', 'mpegts',                     // Output container format
       '-codec:v', 'mpeg1video',           // Encode to MPEG-1 (highly supported by JSMpeg client)
       '-bf', '0',                         // Disable B-frames for real-time low latency
-      '-r', '20',                         // Down-sample frame rate to 20 fps to conserve CPU and network
-      '-s', '854x480',                    // Resize to 480p for efficient dashboard grid rendering
-      '-an',                              // Disable audio channel to save bandwidth
-      '-'                                 // Pipe output to stdout
+      '-r', fps,                          // Down-sample frame rate (10 fps in Eco Mode)
+      '-s', resolution,                   // Resize (480x272 in Eco Mode)
     ];
+
+    if (session.isEcoMode) {
+      ffmpegArgs.push('-b:v', '250k');    // Limit bitrate to conserve network and CPU framing overhead
+    }
+
+    ffmpegArgs.push('-an', '-');          // Disable audio channel and pipe to stdout
 
     try {
       const process = spawn('ffmpeg', ffmpegArgs);

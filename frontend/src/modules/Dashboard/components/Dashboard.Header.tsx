@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Radio, Languages, Video, LayoutList, Maximize, Minimize, Power, Activity } from 'lucide-react';
+import { Radio, Languages, Video, LayoutList, Maximize, Minimize, Power, Activity, Leaf } from 'lucide-react';
 import { ThemeToggle } from '../../Theme/components/Theme.Toggle';
 
 interface HeaderProps {
   isDiscovering: boolean;
   activeTab: 'live' | 'manage' | 'resources';
+  ecoMode: boolean;
+  onToggleEco: () => void;
   onDiscover: () => void;
   onTabChange: (tab: 'live' | 'manage' | 'resources') => void;
   onShutdown: () => void;
@@ -14,6 +16,8 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({
   isDiscovering,
   activeTab,
+  ecoMode,
+  onToggleEco,
   onDiscover,
   onTabChange,
   onShutdown,
@@ -133,6 +137,19 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Theme Toggle */}
         <ThemeToggle />
+
+        {/* Compact Eco Mode Toggle */}
+        <button
+          onClick={onToggleEco}
+          className={`p-2 border rounded-lg transition-all ${
+            ecoMode
+              ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-600 dark:text-emerald-500 hover:bg-emerald-500/20 hover:border-emerald-500/50 shadow-glowEmerald/15'
+              : 'bg-white/5 border-black/10 dark:border-white/10 text-slate-800 dark:text-white/80 hover:border-emerald-400/40 hover:bg-emerald-500/10 hover:text-emerald-500'
+          }`}
+          title={ecoMode ? 'Desativar Modo Econômico' : 'Ativar Modo Econômico'}
+        >
+          <Leaf className={`w-4 h-4 ${ecoMode ? 'animate-pulse' : ''}`} />
+        </button>
 
         {/* Compact Shutdown VMS System Trigger */}
         <button
