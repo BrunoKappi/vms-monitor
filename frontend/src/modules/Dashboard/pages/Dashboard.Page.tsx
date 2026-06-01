@@ -21,12 +21,14 @@ export const DashboardPage: React.FC = () => {
     gridLayout,
     error,
     activeTab,
+    ecoMode,
     handleDiscover,
     handleDeleteCamera,
     handleSetGridLayout,
     handleStartStream,
     handleStopStream,
     handleSetTab,
+    handleToggleEcoMode,
     handleReorderCameras,
   } = useDashboard();
 

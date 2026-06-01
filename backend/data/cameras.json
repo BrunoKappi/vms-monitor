@@ -13,14 +13,14 @@
     "isCustom": false
   },
   {
-    "id": "192_168_1_24",
-    "ip": "192.168.1.24",
+    "id": "192_168_1_2",
+    "ip": "192.168.1.2",
     "port": 5000,
-    "name": "Câmera IPC (192.168.1.24)",
+    "name": "Câmera IPC (192.168.1.2)",
     "user": "admin",
     "pass": "Snulp1234",
     "status": "online",
-    "rtspUrl": "rtsp://admin:Snulp1234@192.168.1.24:554/onvif1",
+    "rtspUrl": "rtsp://admin:Snulp1234@192.168.1.2:554/onvif1",
     "manufacturer": "Generic",
     "model": "RTSP IPC Camera",
     "isCustom": false
@@ -39,6 +39,19 @@
     "isCustom": false
   },
   {
+    "id": "192_168_1_8",
+    "ip": "192.168.1.8",
+    "port": 5000,
+    "name": "Câmera IPC (192.168.1.8)",
+    "user": "admin",
+    "pass": "Snulp1234",
+    "status": "online",
+    "rtspUrl": "rtsp://admin:Snulp1234@192.168.1.8:554/onvif1",
+    "manufacturer": "Generic",
+    "model": "RTSP IPC Camera",
+    "isCustom": false
+  },
+  {
     "id": "192_168_1_25",
     "ip": "192.168.1.25",
     "port": 5000,
@@ -52,27 +65,14 @@
     "isCustom": false
   },
   {
-    "id": "192_168_1_9",
-    "ip": "192.168.1.9",
+    "id": "192_168_1_24",
+    "ip": "192.168.1.24",
     "port": 5000,
-    "name": "Câmera IPC (192.168.1.9)",
+    "name": "Câmera IPC (192.168.1.24)",
     "user": "admin",
     "pass": "Snulp1234",
     "status": "online",
-    "rtspUrl": "rtsp://admin:Snulp1234@192.168.1.9:554/onvif1",
-    "manufacturer": "Generic",
-    "model": "RTSP IPC Camera",
-    "isCustom": false
-  },
-  {
-    "id": "192_168_1_8",
-    "ip": "192.168.1.8",
-    "port": 5000,
-    "name": "Câmera IPC (192.168.1.8)",
-    "user": "admin",
-    "pass": "Snulp1234",
-    "status": "online",
-    "rtspUrl": "rtsp://admin:Snulp1234@192.168.1.8:554/onvif1",
+    "rtspUrl": "rtsp://admin:Snulp1234@192.168.1.24:554/onvif1",
     "manufacturer": "Generic",
     "model": "RTSP IPC Camera",
     "isCustom": false
@@ -91,14 +91,14 @@
     "isCustom": false
   },
   {
-    "id": "192_168_1_2",
-    "ip": "192.168.1.2",
+    "id": "192_168_1_9",
+    "ip": "192.168.1.9",
     "port": 5000,
-    "name": "Câmera IPC (192.168.1.2)",
+    "name": "Câmera IPC (192.168.1.9)",
     "user": "admin",
     "pass": "Snulp1234",
     "status": "online",
-    "rtspUrl": "rtsp://admin:Snulp1234@192.168.1.2:554/onvif1",
+    "rtspUrl": "rtsp://admin:Snulp1234@192.168.1.9:554/onvif1",
     "manufacturer": "Generic",
     "model": "RTSP IPC Camera",
     "isCustom": false
