@@ -63,7 +63,7 @@ echo.
 :: 3. Instalar dependencias da raiz
 echo [3/4] Instalando dependencias da raiz (Workspace)...
 cd /d "%~dp0"
-call npm install
+call npm install --legacy-peer-deps
 if %errorlevel% equ 0 goto ROOT_INSTALL_OK
 
 echo.
