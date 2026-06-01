@@ -26,7 +26,7 @@ function getLocalSubnet(): string {
   for (const name of Object.keys(interfaces)) {
     const lowerName = name.toLowerCase();
     
-    // Detect and heavily deprioritize virtual adapters (WSL, Docker, VirtualBox, VMware, VPNs, etc.)
+    // Detect and heavily deprioritize virtual adapters (WSL, Docker, VirtualBox, VMware, VPNs, Windows Hotspot, etc.)
     const isVirtual = lowerName.includes('wsl') || 
                       lowerName.includes('docker') || 
                       lowerName.includes('virtual') || 
@@ -36,7 +36,15 @@ function getLocalSubnet(): string {
                       lowerName.includes('vethernet') ||
                       lowerName.includes('hyper-v') ||
                       lowerName.includes('hyperv') ||
-                      lowerName.includes('vpn');
+                      lowerName.includes('vpn') ||
+                      lowerName.includes('*'); // Windows appends asterisk (*) to virtual Wi-Fi Direct/Hotspot adapters
+
+    // Detect high-probability physical connections (Wi-Fi, Ethernet, physical Local Connection)
+    const isPhysical = lowerName.includes('wi-fi') || 
+                       lowerName.includes('wifi') || 
+                       lowerName.includes('ethernet') || 
+                       (lowerName.includes('conexão local') && !lowerName.includes('*')) ||
+                       (lowerName.includes('conexao local') && !lowerName.includes('*'));
 
     for (const iface of interfaces[name] || []) {
       if ((iface.family === 'IPv4' || (iface.family as any) === 4 || (iface.family as any) === '4') && !iface.internal) {
@@ -51,6 +59,10 @@ function getLocalSubnet(): string {
           if (firstOctet === '192') priority = 100;
           else if (firstOctet === '10') priority = 90;
           else if (firstOctet === '172') priority = 80;
+
+          if (isPhysical) {
+            priority += 50; // Give a boost to high-probability physical connections (e.g. Wi-Fi)
+          }
 
           if (isVirtual) {
             priority -= 200; // Deprioritize heavily to place at the absolute bottom
