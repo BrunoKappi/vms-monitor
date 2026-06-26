@@ -1,6 +1,8 @@
 @echo off
 title Configuracao Central VMS - CamerasLive
 chcp 65001 >nul
+cd /d "%~dp0.."
+
 
 echo ===================================================
 echo   CONFIGURADOR CENTRAL VMS - CAMERASLIVE
@@ -90,7 +92,7 @@ if not exist "backend\.env" (
 
 :: 3. Instalar dependencias da raiz
 echo [3/4] Instalando dependencias da raiz (Workspace)...
-cd /d "%~dp0"
+cd /d "%~dp0.."
 call npm install --legacy-peer-deps
 if %errorlevel% equ 0 goto ROOT_INSTALL_OK
 
@@ -127,7 +129,7 @@ echo  Tudo foi instalado e configurado perfeitamente!
 echo.
 echo  Passos seguintes:
 echo  1. Feche esta janela.
-echo  2. De dois cliques em "start-vms.bat" para rodar o projeto.
+echo  2. De dois cliques em "scripts\start-vms.bat" para rodar o projeto.
 echo.
 echo ===================================================
 echo.

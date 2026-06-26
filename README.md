@@ -137,10 +137,11 @@ vms-monitor/
 │   └── .env.example              # Environment variable template
 │
 ├── landing-page/                 # Static HTML/CSS/JS landing page
-├── setup-vms.bat                 # Windows: first-time setup script
-├── start-vms.bat                 # Windows: start all servers
-├── stop-vms.bat                  # Windows: stop all servers
-├── install-ffmpeg.ps1            # PowerShell: auto-install FFmpeg
+├── scripts/                      # Utility and setup scripts for Windows
+│   ├── setup-vms.bat             # First-time setup script
+│   ├── start-vms.bat             # Start all servers
+│   ├── stop-vms.bat              # Stop all servers
+│   └── install-ffmpeg.ps1        # Auto-install FFmpeg script
 └── package.json                  # Workspace root (concurrently runner)
 ```
 
@@ -150,7 +151,7 @@ vms-monitor/
 
 - **Node.js** v18 or higher — [nodejs.org](https://nodejs.org/)
 - **FFmpeg** — [ffmpeg.org](https://ffmpeg.org/download.html)
-  - **Windows**: Download a full build, extract it (e.g., to `C:\ffmpeg`), and add `C:\ffmpeg\bin` to your system `PATH` environment variable. Alternatively, run `setup-vms.bat` and choose the automatic install option.
+  - **Windows**: Download a full build, extract it (e.g., to `C:\ffmpeg`), and add `C:\ffmpeg\bin` to your system `PATH` environment variable. Alternatively, run `scripts/setup-vms.bat` and choose the automatic install option.
   - **Linux/macOS**: `sudo apt install ffmpeg` or `brew install ffmpeg`
 
 ---
@@ -159,9 +160,9 @@ vms-monitor/
 
 ### Windows — Automated (Recommended)
 
-The project includes three `.bat` scripts that automate the entire lifecycle:
+The project includes three `.bat` scripts (inside the `scripts/` folder) that automate the entire lifecycle:
 
-#### 1. `setup-vms.bat` — First-time setup
+#### 1. `scripts/setup-vms.bat` — First-time setup
 
 Double-click this file to:
 - Check for Node.js and FFmpeg installations
@@ -171,13 +172,13 @@ Double-click this file to:
 
 > Run this only once after cloning the repository.
 
-#### 2. `start-vms.bat` — Start the application
+#### 2. `scripts/start-vms.bat` — Start the application
 
 Double-click to:
 - Start both the backend (Express + WebSocket) and frontend (Vite) servers concurrently
 - Automatically open `http://localhost:42100` in your default browser
 
-#### 3. `stop-vms.bat` — Stop the application
+#### 3. `scripts/stop-vms.bat` — Stop the application
 
 Double-click to:
 - Gracefully stop all running servers and FFmpeg transcoding processes
