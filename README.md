@@ -1,126 +1,275 @@
-# CamerasLive - VMS Dashboard
+# VMS Monitor — Professional IP Camera Surveillance Dashboard
 
-Um sistema profissional e de alto desempenho de **Video Management System (VMS)** para monitoramento e controle de câmeras IP em tempo real. Construído com uma arquitetura moderna e escalável, o **CamerasLive** realiza a descoberta dinâmica de câmeras ONVIF/RTSP em rede local, transcodifica fluxos RTSP em tempo real de forma ultra-eficiente e oferece uma interface limpa com grades geométricas perfeitas e controles PTZ responsivos.
+<p align="center">
+  <img src="https://cdn.bkappi.com/ProjectsAssets/VMS-Monitor/GithubReadmeAssets/camerasViewDarkTheme.png" alt="VMS Monitor - Camera Grid View" width="100%" />
+</p>
 
----
+> A high-performance **Video Management System (VMS)** for real-time IP camera monitoring. Featuring ONVIF auto-discovery, ultra-low latency RTSP transcoding, 5 premium grid layouts, PTZ control, drag-and-drop reordering, system resource monitoring, dark/light themes, and multi-language support.
 
-## 🚀 Principais Recursos (Key Features)
-
-### 1. 📐 Grades Geométricas Perfeitas com Proporção Estrita 16:9
-A interface monitora os feeds de vídeo em contêineres calculados matematicamente para manter sempre a proporção **16:9** exata (widescreen), eliminando qualquer barra preta lateral (pillarbox) ou superior (letterbox). O sistema suporta **5 modos de grade premium**:
-* **Duplo 2x2 (4 Câmeras):** 4 células iguais com preenchimento total.
-* **Grid 3x3 (9 Câmeras):** 9 células iguais dispostas harmonicamente.
-* **Grid 4x4 (16 Câmeras):** 16 células iguais de alta densidade.
-* **Destaque 3x3 (1 Destaque 2x2 + 5 Satélites):** 1 tela ampliada centralizada cercada por 5 canais.
-* **Destaque 4x4 (1 Destaque 3x3 + 7 Satélites):** 1 tela gigante em evidência cercada por 7 canais em formato de "L".
-
-### 2. ⚡ Transcodificação Ultra-Eficiente com JSMpeg & WebSockets
-Em vez de utilizar plugins pesados ou reprodutores proprietários lentos, o backend do **CamerasLive** faz o spawn sob demanda de processos filhos do **FFmpeg** para converter o fluxo RTSP H.264 para MPEG1 em tempo real, enviando o fluxo de dados binários via **WebSockets** diretamente para um elemento `<canvas>` renderizado no navegador via motor **JSMpeg Canvas 2D**, garantindo:
-* Latência extremamente baixa (< 0.5s).
-* Uso mínimo de CPU no cliente.
-* Capturas de tela (snapshots) perfeitas sem telas pretas.
-
-### 3. 🔍 Descoberta Dinâmica Inteligente (Dynamic Subnet Scan)
-O sistema realiza varreduras ultra-rápidas na sub-rede local buscando dispositivos com a porta RTSP `554` aberta e, em seguida, sonda as capacidades ONVIF em portas HTTP comuns (`80`, `5000`, `8000`, `8080`, `8899`, `37777`), auto-resolvendo e configurando os canais automaticamente.
-
-### 4. 🎮 Controle PTZ ONVIF Responsivo
-A partir do painel ampliado de foco de qualquer câmera online, operadores podem acionar comandos de movimentação contínua de Pan & Tilt em tempo real por meio de um D-Pad interativo, com suporte a três níveis de sensibilidade de velocidade (Lento, Médio, Rápido) e interrupção failsafe automática após 500ms.
-
-### 5. 🎛️ Reordenação por Arrastar e Soltar (Live Drag & Drop)
-Reorganize facilmente a disposição das suas câmeras arrastando qualquer card para outra posição. A nova ordem das imagens atualiza na hora e é persistida no banco de dados local imediatamente.
+[![Node.js](https://img.shields.io/badge/Node.js-v18+-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
+[![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![FFmpeg](https://img.shields.io/badge/FFmpeg-required-007808?logo=ffmpeg&logoColor=white)](https://ffmpeg.org/)
+[![License](https://img.shields.io/badge/License-MIT-8b5cf6)](LICENSE)
 
 ---
 
-## 🛠️ Stack Tecnológica
+## Features
 
-### Frontend:
-* **React 18** (Vite + TypeScript)
-* **Redux Toolkit** (Gerenciamento de estado global)
-* **TailwindCSS** (Estilização premium com efeitos de glassmorphism e neon)
-* **i18next** (Suporte à internacionalização completa)
-* **Lucide React** (Pacote de ícones vetoriais modernos)
+### Camera Grid Views
 
-### Backend:
-* **Node.js** (TypeScript)
-* **Express** (API REST robusta)
-* **ws** (Servidor de WebSockets de alta velocidade para dados binários)
-* **fluent-ffmpeg** (Orquestração do processo de transcodificação binária)
-* **@2bad/onvif** (Protocolo ONVIF para handshakes e comandos de movimentação de soquete SOAP)
+<p align="center">
+  <img src="https://cdn.bkappi.com/ProjectsAssets/VMS-Monitor/GithubReadmeAssets/camerasViewDarkTheme.png" alt="Camera Grid View" width="100%" />
+</p>
+
+**5 precision-engineered 16:9 grid layouts** — all cells maintain strict widescreen proportions, eliminating black bars (pillarbox/letterbox):
+
+| Layout | Cameras | Description |
+|--------|---------|-------------|
+| **Dual Grid 2×2** | 4 | Equal cells — ideal for focused monitoring |
+| **Grid 3×3** | 9 | 9 cameras displayed harmonically |
+| **High-Density 4×4** | 16 | Maximum simultaneous coverage |
+| **Spotlight 3×3** | 6 | 1 enlarged 2×2 main camera + 5 satellite feeds |
+| **Spotlight 4×4** | 8 | 1 giant 3×3 main camera + 7 satellite feeds in an "L" |
+
+### Auto-Discovery
+
+Automatically scans the local subnet for cameras with open RTSP port `554`, then probes ONVIF capabilities on common HTTP ports (`80`, `5000`, `8000`, `8080`, `8899`, `37777`). Zero manual configuration required for ONVIF-compatible cameras.
+
+### Ultra-Low Latency Streaming
+
+The backend spawns on-demand **FFmpeg** child processes to transcode RTSP H.264 streams to MPEG-1 in real-time, delivering binary data via **WebSockets** directly to a `<canvas>` rendered by **JSMpeg** — achieving latency under **0.5 seconds**.
+
+### PTZ Control
+
+Control **Pan, Tilt & Zoom** via an interactive D-Pad from the camera zoom/focus panel with **3 speed levels** (Slow, Medium, Fast) and an automatic failsafe stop after 500ms.
+
+### Drag & Drop Reorder
+
+Rearrange cameras in the grid by dragging cards to any position. The new order is instantly applied and persisted to the local database.
+
+### System Resource Monitoring
+
+<p align="center">
+  <img src="https://cdn.bkappi.com/ProjectsAssets/VMS-Monitor/GithubReadmeAssets/ResourceUsageCpuRamDark.png" alt="Resource Monitoring" width="100%" />
+</p>
+
+Live dashboard with metrics refreshed every **2.5 seconds**:
+
+- **CPU** — real-time usage %, processor model, thread count
+- **RAM** — total, used, free memory + backend process RSS
+- **Active Streams** — list of all active FFmpeg transcoding processes with connected client count
+- **Uptime** — host OS uptime and VMS server uptime
+
+### Camera Management List
+
+<p align="center">
+  <img src="https://cdn.bkappi.com/ProjectsAssets/VMS-Monitor/GithubReadmeAssets/CamerasListDark.png" alt="Camera Management List" width="100%" />
+</p>
+
+Unified table view with search, online/offline status badges, per-camera stream controls, and manual camera registration.
+
+### Additional Features
+
+- **Eco Mode** — pause all active streams to reduce CPU/bandwidth usage
+- **Dark / Light Themes** — automatically detects OS preference (`prefers-color-scheme`) with dark mode as fallback
+- **Multi-Language** — English and Portuguese via i18next; architecture ready for more languages
+- **Instant Snapshots** — download pixel-perfect PNGs from any active live stream
+- **Fullscreen Mode** — one-click fullscreen for the entire VMS dashboard
 
 ---
 
-## 📦 Estrutura do Código (Clean N-Tier Architecture)
+## Technology Stack
 
-O projeto segue um padrão rígido de **Domain-Driven Design (DDD)** no frontend e **N-Tier (Controller-Service-Repository)** no backend:
+### Frontend
 
-```txt
-CamerasLive/
-├── frontend/                 # Aplicação React
+| Technology | Purpose |
+|------------|---------|
+| **React 18** + Vite | UI framework + build tool |
+| **TypeScript** | Type safety |
+| **Redux Toolkit** | Global state management |
+| **TailwindCSS** | Glassmorphism + neon styling |
+| **i18next** | Internationalization |
+| **JSMpeg** | Canvas 2D MPEG-1 video rendering |
+| **Lucide React** | Icon library |
+
+### Backend
+
+| Technology | Purpose |
+|------------|---------|
+| **Node.js** + **Express** | REST API server |
+| **TypeScript** | Type safety |
+| **ws** | WebSocket server for binary stream delivery |
+| **fluent-ffmpeg** | FFmpeg process orchestration |
+| **@2bad/onvif** | ONVIF SOAP protocol for discovery & PTZ |
+| **Helmet** + **CORS** | Security middleware |
+
+---
+
+## Project Structure
+
+```
+vms-monitor/
+├── frontend/                     # React 18 + Vite application
+│   └── src/
+│       ├── modules/
+│       │   ├── Dashboard/        # Main VMS domain (DDD)
+│       │   │   ├── components/   # UI components (Grid, Header, Card, Resources...)
+│       │   │   ├── hooks/        # Custom React hooks
+│       │   │   ├── pages/        # Dashboard page
+│       │   │   ├── services/     # API service layer
+│       │   │   ├── store/        # Redux slice
+│       │   │   └── types/        # TypeScript types
+│       │   └── Theme/            # Theme context, hooks, toggle component
+│       ├── i18n.ts               # Internationalization config (EN + PT)
+│       └── store/                # Root Redux store
+│
+├── backend/                      # Express + WebSocket API
+│   ├── bin/                      # Local FFmpeg binary (fallback)
 │   ├── src/
-│   │   ├── modules/
-│   │   │   └── Dashboard/    # Domínio principal do VMS
-│   │   │       ├── components/
-│   │   │       ├── hooks/
-│   │   │       ├── pages/
-│   │   │       ├── services/
-│   │   │       └── store/
-├── backend/                  # Servidor de Transcodificação & API
-│   ├── src/
-│   │   ├── controllers/
-│   │   ├── services/
-│   │   ├── repositories/
-│   │   ├── routes/
-│   │   └── server.ts
+│   │   ├── controllers/          # HTTP request handlers
+│   │   ├── services/             # Business logic (Stream, Camera, System)
+│   │   ├── repositories/         # Data persistence (SQLite)
+│   │   ├── routes/               # API route definitions
+│   │   ├── middlewares/          # Error handler
+│   │   ├── config/               # App configuration (ports, env)
+│   │   └── server.ts             # Express + WebSocket bootstrap
+│   └── .env.example              # Environment variable template
+│
+├── landing-page/                 # Static HTML/CSS/JS landing page
+├── setup-vms.bat                 # Windows: first-time setup script
+├── start-vms.bat                 # Windows: start all servers
+├── stop-vms.bat                  # Windows: stop all servers
+├── install-ffmpeg.ps1            # PowerShell: auto-install FFmpeg
+└── package.json                  # Workspace root (concurrently runner)
 ```
 
 ---
 
-## 🚀 Como Rodar o Projeto (Passo a Passo)
+## Prerequisites
 
-### 📋 Pré-requisitos:
-1. **Node.js** v18+ instalado.
-2. **FFmpeg** instalado na máquina e adicionado às variáveis de ambiente (PATH).
-   - *No Windows:* Baixe o FFmpeg, extraia a pasta, copie o caminho da subpasta `bin` (ex: `C:\ffmpeg\bin`) e adicione-o às Variáveis de Ambiente do Sistema em "Path".
-   - *No Linux/macOS:* Instale via gerenciador de pacotes (`sudo apt install ffmpeg` ou `brew install ffmpeg`).
-
----
-
-### 💻 Passo a Passo via CMD (Após Clonar o Repositório)
-
-Se você acabou de clonar o repositório, abra o seu terminal (**CMD** ou **PowerShell**) e execute as etapas abaixo em ordem para configurar e inicializar a central de monitoramento:
-
-1. **Navegue até a pasta do projeto:**
-   ```cmd
-   cd CamerasLive
-   ```
-
-2. **Instale as dependências da raiz (Workspace):**
-   ```cmd
-   npm install
-   ```
-
-3. **Instale as dependências de todos os submódulos (Frontend + Backend):**
-   ```cmd
-   npm run install-all
-   ```
-
-4. **Inicie os servidores integrados (Vite + Express em paralelo):**
-   ```cmd
-   npm run dev
-   ```
-
-5. **Acesse o painel do VMS no navegador:**
-   Abra seu navegador e acesse: [http://localhost:42100](http://localhost:42100)
+- **Node.js** v18 or higher — [nodejs.org](https://nodejs.org/)
+- **FFmpeg** — [ffmpeg.org](https://ffmpeg.org/download.html)
+  - **Windows**: Download a full build, extract it (e.g., to `C:\ffmpeg`), and add `C:\ffmpeg\bin` to your system `PATH` environment variable. Alternatively, run `setup-vms.bat` and choose the automatic install option.
+  - **Linux/macOS**: `sudo apt install ffmpeg` or `brew install ffmpeg`
 
 ---
 
-### ⚡ Inicialização Automatizada no Windows (Recomendado)
+## Installation
 
-Para usuários do Windows, criamos scripts automatizados em lote (`.bat`) que facilitam e agilizam todo o processo:
+### Windows — Automated (Recommended)
 
-1. **[setup-vms.bat](file:///c:/Users/Bruno/Desktop/Projetos/Pessoais/CamerasLive/setup-vms.bat) (Executar apenas na primeira vez):**
-   Dê um duplo clique neste arquivo para verificar os pré-requisitos do sistema (Node.js e FFmpeg) e instalar automaticamente todas as dependências necessárias para a raiz e submódulos do projeto.
-2. **[start-vms.bat](file:///c:/Users/Bruno/Desktop/Projetos/Pessoais/CamerasLive/start-vms.bat) (Executar para rodar o projeto):**
-   Dê um duplo clique para iniciar os servidores integrados em segundo plano e abrir automaticamente a interface do **CamerasLive** em seu navegador padrão.
-3. **[stop-vms.bat](file:///c:/Users/Bruno/Desktop/Projetos/Pessoais/CamerasLive/stop-vms.bat) (Executar para desligar o projeto):**
-   Dê um duplo clique para parar instantaneamente todos os servidores e processos de transcodificação de streams ativos, liberando as portas de rede do seu PC (`42100`, `42200` e `42300`).
+The project includes three `.bat` scripts that automate the entire lifecycle:
+
+#### 1. `setup-vms.bat` — First-time setup
+
+Double-click this file to:
+- Check for Node.js and FFmpeg installations
+- Offer automatic local FFmpeg download if not found in PATH
+- Copy `backend/.env.example` → `backend/.env`
+- Install all root and submodule (frontend + backend) Node.js dependencies
+
+> Run this only once after cloning the repository.
+
+#### 2. `start-vms.bat` — Start the application
+
+Double-click to:
+- Start both the backend (Express + WebSocket) and frontend (Vite) servers concurrently
+- Automatically open `http://localhost:42100` in your default browser
+
+#### 3. `stop-vms.bat` — Stop the application
+
+Double-click to:
+- Gracefully stop all running servers and FFmpeg transcoding processes
+- Free ports `42100`, `42200`, and `42300`
+
+---
+
+### Manual CLI Setup
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/BrunoKappi/vms-monitor.git
+cd vms-monitor
+
+# 2. Install root workspace dependencies
+npm install
+
+# 3. Install all frontend and backend dependencies
+npm run install-all
+
+# 4. Configure environment variables
+cp backend/.env.example backend/.env
+# Edit backend/.env with your camera credentials
+
+# 5. Start both servers
+npm run dev
+```
+
+Open your browser at: **http://localhost:42100**
+
+---
+
+## Environment Variables
+
+Edit `backend/.env` after installation:
+
+```env
+PORT=42200                                  # REST API port
+WS_STREAM_PORT=42300                        # WebSocket streaming port
+FRONTEND_PORT=42100                         # Vite dev server port
+CAMERA_DEFAULT_USER=admin                   # Default username for discovery
+CAMERA_DEFAULT_PASS=yourpassword            # Default password for discovery
+CAMERA_DEFAULT_IPS=192.168.1.24,192.168.1.8 # Known camera IPs (comma-separated)
+```
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `PORT` | `42200` | Express REST API server port |
+| `WS_STREAM_PORT` | `42300` | WebSocket server for MPEG-1 binary streams |
+| `FRONTEND_PORT` | `42100` | Vite development server port |
+| `CAMERA_DEFAULT_USER` | `admin` | Username used during ONVIF auto-discovery |
+| `CAMERA_DEFAULT_PASS` | — | Password used during ONVIF auto-discovery |
+| `CAMERA_DEFAULT_IPS` | — | Comma-separated list of known camera IPs for faster scanning |
+
+---
+
+## Available Scripts
+
+From the project root:
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start both frontend and backend concurrently |
+| `npm run install-all` | Install dependencies for both frontend and backend |
+
+---
+
+## API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/api/cameras` | List all registered cameras |
+| `POST` | `/api/cameras` | Register a new camera |
+| `DELETE` | `/api/cameras/:id` | Remove a camera |
+| `POST` | `/api/cameras/discover` | Trigger ONVIF subnet discovery |
+| `PUT` | `/api/cameras/reorder` | Persist camera display order |
+| `GET` | `/api/system/metrics` | Get CPU, RAM, uptime, and active streams |
+| `POST` | `/api/system/shutdown` | Gracefully shutdown all VMS servers |
+
+---
+
+## Developer
+
+**Bruno Kappi** — Fullstack Developer & Systems Analyst  
+Novo Hamburgo, Rio Grande do Sul, Brazil
+
+- Portfolio: [myportfolio.bkappi.com](https://myportfolio.bkappi.com/)
+- LinkedIn: [linkedin.com/in/brunokappi](https://www.linkedin.com/in/brunokappi/)
+- Blog: [blog.bkappi.com](https://blog.bkappi.com/)
+
+---
+
+## License
+
+This project is licensed under the **MIT License**.

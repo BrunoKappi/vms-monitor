@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VMS Monitor — Professional IP Camera Surveillance Dashboard</title>
+  <meta name="description" content="VMS Monitor is a high-performance Video Management System for real-time IP camera monitoring. Auto-discovery, multiple grid layouts, PTZ control, dark/light themes, and system resource monitoring." />
+  <meta name="keywords" content="VMS, CCTV, IP Camera, ONVIF, RTSP, surveillance, monitoring, dashboard, PTZ control" />
+  <meta name="author" content="Bruno Kappi" />
+  <meta property="og:title" content="VMS Monitor — Professional IP Camera Surveillance Dashboard" />
+  <meta property="og:description" content="Real-time ONVIF CCTV Network Monitor with auto-discovery, multiple grid layouts, and system resource monitoring." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="https://cdn.bkappi.com/ProjectsAssets/BkappiGeneral/bkappiIcon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- =========== NAVBAR =========== -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#" class="nav-brand">
+        <div class="brand-dot"></div>
+        <span class="brand-name">VMS<span class="brand-accent">Monitor</span></span>
+      </a>
+
+      <div class="nav-links">
+        <a href="#features" class="nav-link" data-i18n="nav.features">Features</a>
+        <a href="#layouts" class="nav-link" data-i18n="nav.layouts">Layouts</a>
+        <a href="#monitoring" class="nav-link" data-i18n="nav.monitoring">Monitoring</a>
+        <a href="#setup" class="nav-link" data-i18n="nav.setup">Setup</a>
+        <a href="#developer" class="nav-link" data-i18n="nav.developer">Developer</a>
+      </div>
+
+      <div class="nav-actions">
+        <div class="lang-switcher" id="langSwitcher">
+          <button class="lang-btn active" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="pt">PT</button>
+          <button class="lang-btn" data-lang="es">ES</button>
+        </div>
+
+        <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+
+        <a href="https://github.com/BrunoKappi/vms-monitor" target="_blank" class="btn-cta-sm" data-i18n="nav.github">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- =========== HERO =========== -->
+  <section class="hero" id="hero">
+    <div class="hero-bg">
+      <div class="hero-grid"></div>
+      <div class="hero-glow glow-1"></div>
+      <div class="hero-glow glow-2"></div>
+      <div class="hero-glow glow-3"></div>
+    </div>
+
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        <span data-i18n="hero.badge">Open Source · Free · Self-hosted</span>
+      </div>
+
+      <h1 class="hero-title">
+        <span data-i18n="hero.title1">Professional</span>
+        <span class="gradient-text" data-i18n="hero.title2">IP Camera</span>
+        <span data-i18n="hero.title3">Surveillance Dashboard</span>
+      </h1>
+
+      <p class="hero-subtitle" data-i18n="hero.subtitle">
+        A high-performance VMS with ONVIF auto-discovery, real-time RTSP transcoding, multiple grid layouts, PTZ control, resource monitoring, and multi-language support — all in a sleek, modern interface.
+      </p>
+
+      <div class="hero-actions">
+        <a href="https://github.com/BrunoKappi/vms-monitor" target="_blank" class="btn-primary">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          <span data-i18n="hero.cta.github">View on GitHub</span>
+        </a>
+        <a href="#features" class="btn-secondary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><circle cx="12" cy="12" r="10"/><polyline points="8 12 12 16 16 12"/><line x1="12" y1="8" x2="12" y2="16"/></svg>
+          <span data-i18n="hero.cta.explore">Explore Features</span>
+        </a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat-item">
+          <span class="stat-value">5</span>
+          <span class="stat-label" data-i18n="hero.stats.layouts">Grid Layouts</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-value">16</span>
+          <span class="stat-label" data-i18n="hero.stats.cameras">Cameras Supported</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-value">&lt;0.5s</span>
+          <span class="stat-label" data-i18n="hero.stats.latency">Stream Latency</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-value">3</span>
+          <span class="stat-label" data-i18n="hero.stats.languages">Languages</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-screenshot">
+      <div class="screenshot-frame">
+        <div class="screenshot-bar">
+          <span class="bar-dot red"></span>
+          <span class="bar-dot yellow"></span>
+          <span class="bar-dot green"></span>
+          <span class="bar-address">localhost:42100</span>
+        </div>
+        <img
+          src="https://cdn.bkappi.com/ProjectsAssets/VMS-Monitor/LandingPage/camerasViewDarkTheme.png"
+          alt="VMS Monitor Dashboard - Camera Grid View"
+          class="screenshot-img"
+          id="heroScreenshot"
+          loading="eager"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- =========== FEATURES =========== -->
+  <section class="section features-section" id="features">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag" data-i18n="features.tag">Core Features</span>
+        <h2 class="section-title" data-i18n="features.title">Everything You Need for Professional Surveillance</h2>
+        <p class="section-subtitle" data-i18n="features.subtitle">Built with a modern, scalable architecture for real-world CCTV deployments</p>
+      </div>
+
+      <div class="features-grid">
+
+        <div class="feature-card featured">
+          <div class="feature-icon violet">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+          <h3 class="feature-title" data-i18n="features.discovery.title">Smart Auto-Discovery</h3>
+          <p class="feature-desc" data-i18n="features.discovery.desc">Automatically scans your local subnet for devices with open RTSP port 554, then probes ONVIF capabilities on common HTTP ports — zero manual configuration required.</p>
+          <div class="feature-tags">
+            <span class="tag">ONVIF</span>
+            <span class="tag">RTSP</span>
+            <span class="tag">Auto-Scan</span>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon cyan">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+          </div>
+          <h3 class="feature-title" data-i18n="features.streaming.title">Ultra-Low Latency Streaming</h3>
+          <p class="feature-desc" data-i18n="features.streaming.desc">FFmpeg transcodes RTSP H.264 streams to MPEG-1 in real-time, delivering binary data via WebSockets to a canvas element rendered by JSMpeg — achieving latency under 0.5 seconds.</p>
+          <div class="feature-tags">
+            <span class="tag">FFmpeg</span>
+            <span class="tag">WebSocket</span>
+            <span class="tag">JSMpeg</span>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon emerald">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </div>
+          <h3 class="feature-title" data-i18n="features.grids.title">5 Premium Grid Layouts</h3>
+          <p class="feature-desc" data-i18n="features.grids.desc">Switch between 5 mathematically perfect 16:9 grid layouts — from compact 2x2 dual view to a full 4x4 matrix with 16 simultaneous feeds. All grids maintain exact widescreen proportions.</p>
+          <div class="feature-tags">
+            <span class="tag">2x2</span>
+            <span class="tag">3x3</span>
+            <span class="tag">4x4</span>
+            <span class="tag">Spotlight</span>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon orange">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41"/><path d="M5.34 18.66l-1.41 1.41"/><path d="M22 12h-2"/><path d="M4 12H2"/><path d="M19.07 19.07l-1.41-1.41"/><path d="M5.34 5.34L3.93 3.93"/><path d="M12 2v2"/><path d="M12 20v2"/></svg>
+          </div>
+          <h3 class="feature-title" data-i18n="features.ptz.title">ONVIF PTZ Control</h3>
+          <p class="feature-desc" data-i18n="features.ptz.desc">Control Pan, Tilt and Zoom via an interactive D-Pad with three speed levels (Slow, Medium, Fast) and automatic failsafe stop after 500ms. Full ONVIF SOAP protocol compliance.</p>
+          <div class="feature-tags">
+            <span class="tag">Pan/Tilt</span>
+            <span class="tag">Zoom</span>
+            <span class="tag">3 Speeds</span>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon violet">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="5 9 2 12 5 15"/><polyline points="19 9 22 12 19 15"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+          </div>
+          <h3 class="feature-title" data-i18n="features.dragdrop.title">Live Drag and Drop Reorder</h3>
+          <p class="feature-desc" data-i18n="features.dragdrop.desc">Rearrange camera positions in real-time by dragging cards within the grid. New order is instantly applied and persisted to the local database — no page reload required.</p>
+          <div class="feature-tags">
+            <span class="tag">HTML5 DnD</span>
+            <span class="tag">Persistent</span>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon cyan">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          </div>
+          <h3 class="feature-title" data-i18n="features.snapshot.title">Instant Snapshots</h3>
+          <p class="feature-desc" data-i18n="features.snapshot.desc">Capture pixel-perfect screenshots from any live stream at any moment — no black frames. Download camera snapshots directly from the browser with a single click.</p>
+          <div class="feature-tags">
+            <span class="tag">Canvas API</span>
+            <span class="tag">PNG Export</span>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon emerald">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </div>
+          <h3 class="feature-title" data-i18n="features.eco.title">Resource Saver Mode</h3>
+          <p class="feature-desc" data-i18n="features.eco.desc">Activate Eco Mode to pause all active video streams and reduce CPU/bandwidth usage drastically — perfect for long-duration monitoring sessions.</p>
+          <div class="feature-tags">
+            <span class="tag">Eco Mode</span>
+            <span class="tag">CPU Saver</span>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon orange">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <h3 class="feature-title" data-i18n="features.i18n.title">Multi-Language Interface</h3>
+          <p class="feature-desc" data-i18n="features.i18n.desc">Full internationalization with i18next. The interface is available in English and Portuguese, with the architecture ready for additional language packs. Switch languages instantly.</p>
+          <div class="feature-tags">
+            <span class="tag">i18next</span>
+            <span class="tag">EN</span>
+            <span class="tag">PT-BR</span>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon violet">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          </div>
+          <h3 class="feature-title" data-i18n="features.theme.title">Dark and Light Themes</h3>
+          <p class="feature-desc" data-i18n="features.theme.desc">Automatically detects your OS preference (prefers-color-scheme) with dark mode as fallback. Switch between premium dark glassmorphism and clean light interfaces at any time.</p>
+          <div class="feature-tags">
+            <span class="tag">Dark Mode</span>
+            <span class="tag">Light Mode</span>
+            <span class="tag">OS Preference</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =========== GRID LAYOUTS =========== -->
+  <section class="section layouts-section" id="layouts">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag" data-i18n="layouts.tag">Grid Layouts</span>
+        <h2 class="section-title" data-i18n="layouts.title">Visualize Every Camera, Every Way</h2>
+        <p class="section-subtitle" data-i18n="layouts.subtitle">Five precision-engineered 16:9 grid layouts — from focused single views to massive 16-camera matrices</p>
+      </div>
+
+      <div class="layouts-showcase">
+        <div class="layout-tabs">
+          <button class="layout-tab active" data-layout="dark" data-i18n="layouts.tab.dark">Dark Theme</button>
+          <button class="layout-tab" data-layout="light" data-i18n="layouts.tab.light">Light Theme</button>
+        </div>
+
+        <div class="layout-display">
+          <img
+            id="layoutImgDark"
+            src="https://cdn.bkappi.com/ProjectsAssets/VMS-Monitor/LandingPage/camerasViewDarkTheme.png"
+            alt="VMS Monitor - Camera Grid Dark Theme"
+            class="layout-img active"
+            loading="lazy"
+          />
+          <img
+            id="layoutImgLight"
+            src="https://cdn.bkappi.com/ProjectsAssets/VMS-Monitor/LandingPage/CamerasViewLightTheme.png"
+            alt="VMS Monitor - Camera Grid Light Theme"
+            class="layout-img"
+            loading="lazy"
+          />
+        </div>
+      </div>
+
+      <div class="layouts-grid">
+        <div class="layout-card">
+          <div class="layout-preview grid-2x2">
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+          </div>
+          <h3 class="layout-name" data-i18n="layouts.grid2x2.name">Dual Grid 2x2</h3>
+          <p class="layout-desc" data-i18n="layouts.grid2x2.desc">4 cameras in equal cells — perfect for focused monitoring of critical areas.</p>
+        </div>
+
+        <div class="layout-card">
+          <div class="layout-preview grid-3x3">
+            <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+          </div>
+          <h3 class="layout-name" data-i18n="layouts.grid3x3.name">Grid 3x3</h3>
+          <p class="layout-desc" data-i18n="layouts.grid3x3.desc">9 cameras displayed harmonically — ideal for medium-scale surveillance.</p>
+        </div>
+
+        <div class="layout-card">
+          <div class="layout-preview grid-4x4">
+            <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+          </div>
+          <h3 class="layout-name" data-i18n="layouts.grid4x4.name">High-Density 4x4</h3>
+          <p class="layout-desc" data-i18n="layouts.grid4x4.desc">16 simultaneous feeds — maximum coverage for large-scale deployments.</p>
+        </div>
+
+        <div class="layout-card">
+          <div class="layout-preview spotlight-3x3">
+            <div class="cell spotlight"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+          </div>
+          <h3 class="layout-name" data-i18n="layouts.spotlight3x3.name">Spotlight 3x3</h3>
+          <p class="layout-desc" data-i18n="layouts.spotlight3x3.desc">1 enlarged 2x2 focus camera surrounded by 5 satellite feeds in an L-shaped layout.</p>
+        </div>
+
+        <div class="layout-card">
+          <div class="layout-preview spotlight-4x4">
+            <div class="cell spotlight"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+          </div>
+          <h3 class="layout-name" data-i18n="layouts.spotlight4x4.name">Spotlight 4x4</h3>
+          <p class="layout-desc" data-i18n="layouts.spotlight4x4.desc">Giant 3x3 primary view with 7 satellite cameras — maximum attention where it matters most.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========== CAMERAS LIST SCREENSHOT =========== -->
+  <section class="section cameras-list-section">
+    <div class="container">
+      <div class="split-content">
+        <div class="split-text">
+          <span class="section-tag" data-i18n="list.tag">Camera Management</span>
+          <h2 class="split-title" data-i18n="list.title">Complete Camera Control Panel</h2>
+          <p class="split-desc" data-i18n="list.desc">Manage your entire camera fleet from a unified table view. Search by name, IP, or brand. Check online/offline status at a glance, start or stop individual streams, and add cameras manually for non-standard setups.</p>
+          <ul class="feature-list">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><polyline points="20 6 9 17 4 12"/></svg>
+              <span data-i18n="list.feature1">Real-time online/offline status badges</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><polyline points="20 6 9 17 4 12"/></svg>
+              <span data-i18n="list.feature2">Search by camera name, IP, or manufacturer</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><polyline points="20 6 9 17 4 12"/></svg>
+              <span data-i18n="list.feature3">One-click stream start/disconnect per camera</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><polyline points="20 6 9 17 4 12"/></svg>
+              <span data-i18n="list.feature4">Manual camera registration with custom credentials</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><polyline points="20 6 9 17 4 12"/></svg>
+              <span data-i18n="list.feature5">Live camera count statistics (Total / Online / Offline)</span>
+            </li>
+          </ul>
+        </div>
+        <div class="split-image">
+          <img
+            src="https://cdn.bkappi.com/ProjectsAssets/VMS-Monitor/LandingPage/CamerasListDark.png"
+            alt="VMS Monitor - Camera Management List"
+            class="img-shadow"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========== MONITORING =========== -->
+  <section class="section monitoring-section" id="monitoring">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag" data-i18n="monitoring.tag">System Monitoring</span>
+        <h2 class="section-title" data-i18n="monitoring.title">Real-Time Resource Dashboard</h2>
+        <p class="section-subtitle" data-i18n="monitoring.subtitle">Keep your system healthy with live metrics refreshed every 2.5 seconds</p>
+      </div>
+
+      <div class="monitoring-content">
+        <div class="monitoring-imgs">
+          <img
+            src="https://cdn.bkappi.com/ProjectsAssets/VMS-Monitor/LandingPage/ResourceUsageCpuRamDark.png"
+            alt="VMS Monitor - Resource Monitoring Dark"
+            class="monitoring-img active"
+            id="monImgDark"
+            loading="lazy"
+          />
+          <img
+            src="https://cdn.bkappi.com/ProjectsAssets/VMS-Monitor/LandingPage/ResourceUsageCpuRamLight.png"
+            alt="VMS Monitor - Resource Monitoring Light"
+            class="monitoring-img"
+            id="monImgLight"
+            loading="lazy"
+          />
+        </div>
+
+        <div class="monitoring-metrics">
+          <div class="metric-card violet">
+            <div class="metric-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>
+            </div>
+            <div class="metric-info">
+              <h4 data-i18n="monitoring.cpu.title">CPU Usage</h4>
+              <p data-i18n="monitoring.cpu.desc">Real-time CPU load percentage with processor model and thread count — color-coded progress bar.</p>
+            </div>
+          </div>
+
+          <div class="metric-card cyan">
+            <div class="metric-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            </div>
+            <div class="metric-info">
+              <h4 data-i18n="monitoring.ram.title">RAM Memory</h4>
+              <p data-i18n="monitoring.ram.desc">Tracks total, used, and free memory with percentage gauge and backend process RSS footprint.</p>
+            </div>
+          </div>
+
+          <div class="metric-card emerald">
+            <div class="metric-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+            </div>
+            <div class="metric-info">
+              <h4 data-i18n="monitoring.streams.title">Active Streams</h4>
+              <p data-i18n="monitoring.streams.desc">Lists all active FFmpeg transcoding processes with camera IDs and connected client count in real-time.</p>
+            </div>
+          </div>
+
+          <div class="metric-card orange">
+            <div class="metric-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div class="metric-info">
+              <h4 data-i18n="monitoring.uptime.title">System Uptime</h4>
+              <p data-i18n="monitoring.uptime.desc">Displays both host OS uptime and VMS server uptime alongside platform and OS release information.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========== TECH STACK =========== -->
+  <section class="section stack-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag" data-i18n="stack.tag">Technology Stack</span>
+        <h2 class="section-title" data-i18n="stack.title">Built with Modern, Battle-Tested Technologies</h2>
+      </div>
+
+      <div class="stack-grid">
+        <div class="stack-group">
+          <h3 class="stack-group-title" data-i18n="stack.frontend">Frontend</h3>
+          <div class="stack-items">
+            <div class="stack-item">
+              <span class="stack-icon">&#9883;</span>
+              <div>
+                <span class="stack-name">React 18</span>
+                <span class="stack-desc" data-i18n="stack.react">Vite + TypeScript</span>
+              </div>
+            </div>
+            <div class="stack-item">
+              <span class="stack-icon">&#9889;</span>
+              <div>
+                <span class="stack-name">Redux Toolkit</span>
+                <span class="stack-desc" data-i18n="stack.redux">Global state management</span>
+              </div>
+            </div>
+            <div class="stack-item">
+              <span class="stack-icon">&#127912;</span>
+              <div>
+                <span class="stack-name">TailwindCSS</span>
+                <span class="stack-desc" data-i18n="stack.tailwind">Glassmorphism + neon effects</span>
+              </div>
+            </div>
+            <div class="stack-item">
+              <span class="stack-icon">&#127760;</span>
+              <div>
+                <span class="stack-name">i18next</span>
+                <span class="stack-desc" data-i18n="stack.i18n">Full internationalization</span>
+              </div>
+            </div>
+            <div class="stack-item">
+              <span class="stack-icon">&#128249;</span>
+              <div>
+                <span class="stack-name">JSMpeg</span>
+                <span class="stack-desc" data-i18n="stack.jsmpeg">Canvas 2D video rendering</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stack-group">
+          <h3 class="stack-group-title" data-i18n="stack.backend">Backend</h3>
+          <div class="stack-items">
+            <div class="stack-item">
+              <span class="stack-icon">&#128154;</span>
+              <div>
+                <span class="stack-name">Node.js + Express</span>
+                <span class="stack-desc" data-i18n="stack.node">REST API + TypeScript</span>
+              </div>
+            </div>
+            <div class="stack-item">
+              <span class="stack-icon">&#128268;</span>
+              <div>
+                <span class="stack-name">WebSockets (ws)</span>
+                <span class="stack-desc" data-i18n="stack.ws">High-speed binary streaming</span>
+              </div>
+            </div>
+            <div class="stack-item">
+              <span class="stack-icon">&#127902;</span>
+              <div>
+                <span class="stack-name">FFmpeg</span>
+                <span class="stack-desc" data-i18n="stack.ffmpeg">RTSP to MPEG-1 transcoding</span>
+              </div>
+            </div>
+            <div class="stack-item">
+              <span class="stack-icon">&#128225;</span>
+              <div>
+                <span class="stack-name">@2bad/onvif</span>
+                <span class="stack-desc" data-i18n="stack.onvif">ONVIF SOAP protocol</span>
+              </div>
+            </div>
+            <div class="stack-item">
+              <span class="stack-icon">&#128274;</span>
+              <div>
+                <span class="stack-name">Helmet + CORS</span>
+                <span class="stack-desc" data-i18n="stack.security">Security middleware</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========== SETUP / QUICK START =========== -->
+  <section class="section setup-section" id="setup">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag" data-i18n="setup.tag">Quick Start</span>
+        <h2 class="section-title" data-i18n="setup.title">Up and Running in Minutes</h2>
+        <p class="section-subtitle" data-i18n="setup.subtitle">Choose between the automated Windows installer or manual setup via CLI</p>
+      </div>
+
+      <div class="setup-grid">
+        <div class="setup-card featured">
+          <div class="setup-card-header">
+            <div class="setup-icon windows">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
+            </div>
+            <div>
+              <h3 data-i18n="setup.windows.title">Windows Quick Start</h3>
+              <p class="setup-card-sub" data-i18n="setup.windows.sub">Automated .bat scripts — just double-click</p>
+            </div>
+          </div>
+          <ol class="setup-steps">
+            <li>
+              <span class="step-num">1</span>
+              <div>
+                <strong data-i18n="setup.windows.step1.title">Clone the repository</strong>
+                <code class="inline-code">git clone https://github.com/BrunoKappi/vms-monitor.git</code>
+              </div>
+            </li>
+            <li>
+              <span class="step-num">2</span>
+              <div>
+                <strong data-i18n="setup.windows.step2.title">Run setup-vms.bat</strong>
+                <p class="step-desc" data-i18n="setup.windows.step2.desc">Double-click setup-vms.bat — installs Node.js dependencies, checks FFmpeg, and configures the .env file automatically.</p>
+              </div>
+            </li>
+            <li>
+              <span class="step-num">3</span>
+              <div>
+                <strong data-i18n="setup.windows.step3.title">Launch with start-vms.bat</strong>
+                <p class="step-desc" data-i18n="setup.windows.step3.desc">Double-click start-vms.bat — starts both servers and opens the dashboard in your browser automatically at http://localhost:42100.</p>
+              </div>
+            </li>
+            <li>
+              <span class="step-num">4</span>
+              <div>
+                <strong data-i18n="setup.windows.step4.title">Stop with stop-vms.bat</strong>
+                <p class="step-desc" data-i18n="setup.windows.step4.desc">Double-click stop-vms.bat to gracefully shut down all servers and free ports 42100, 42200, and 42300.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+
+        <div class="setup-card">
+          <div class="setup-card-header">
+            <div class="setup-icon terminal">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+            </div>
+            <div>
+              <h3 data-i18n="setup.manual.title">Manual CLI Setup</h3>
+              <p class="setup-card-sub" data-i18n="setup.manual.sub">Node.js v18+ and FFmpeg required</p>
+            </div>
+          </div>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span data-i18n="setup.manual.prereqs">Prerequisites</span>
+              <button class="copy-btn" data-clipboard="prereqs" title="Copy">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              </button>
+            </div>
+            <pre id="code-prereqs"># Install Node.js v18+ from https://nodejs.org/
+# Install FFmpeg from https://ffmpeg.org/download.html
+# Add ffmpeg/bin to your system PATH</pre>
+          </div>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span data-i18n="setup.manual.install">Installation</span>
+              <button class="copy-btn" data-clipboard="install" title="Copy">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              </button>
+            </div>
+            <pre id="code-install">git clone https://github.com/BrunoKappi/vms-monitor.git
+cd vms-monitor
+npm install
+npm run install-all</pre>
+          </div>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span data-i18n="setup.manual.run">Run</span>
+              <button class="copy-btn" data-clipboard="run" title="Copy">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              </button>
+            </div>
+            <pre id="code-run">npm run dev
+# Open: http://localhost:42100</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="env-section">
+        <h3 class="env-title" data-i18n="setup.env.title">Environment Variables (backend/.env)</h3>
+        <div class="env-grid">
+          <div class="env-item">
+            <code class="env-key">PORT</code>
+            <span class="env-val">42200</span>
+            <p class="env-desc" data-i18n="setup.env.port">REST API server port</p>
+          </div>
+          <div class="env-item">
+            <code class="env-key">WS_STREAM_PORT</code>
+            <span class="env-val">42300</span>
+            <p class="env-desc" data-i18n="setup.env.ws">WebSocket streaming server port</p>
+          </div>
+          <div class="env-item">
+            <code class="env-key">FRONTEND_PORT</code>
+            <span class="env-val">42100</span>
+            <p class="env-desc" data-i18n="setup.env.frontend">Vite dev server port</p>
+          </div>
+          <div class="env-item">
+            <code class="env-key">CAMERA_DEFAULT_USER</code>
+            <span class="env-val">admin</span>
+            <p class="env-desc" data-i18n="setup.env.user">Default username for camera discovery</p>
+          </div>
+          <div class="env-item">
+            <code class="env-key">CAMERA_DEFAULT_PASS</code>
+            <span class="env-val">password</span>
+            <p class="env-desc" data-i18n="setup.env.pass">Default password for camera discovery</p>
+          </div>
+          <div class="env-item">
+            <code class="env-key">CAMERA_DEFAULT_IPS</code>
+            <span class="env-val">192.168.1.x,...</span>
+            <p class="env-desc" data-i18n="setup.env.ips">Comma-separated known camera IPs for fast discovery</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========== DEVELOPER =========== -->
+  <section class="section developer-section" id="developer">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag" data-i18n="dev.tag">About the Developer</span>
+        <h2 class="section-title" data-i18n="dev.title">Meet the Creator</h2>
+      </div>
+
+      <div class="developer-card">
+        <div class="dev-avatar-wrapper">
+          <img
+            src="https://cdn.bkappi.com/BrunoKappi/Images/ProfilePicture.jpg"
+            alt="Bruno Kappi"
+            class="dev-avatar"
+            loading="lazy"
+          />
+          <div class="dev-status">
+            <span class="status-dot"></span>
+            <span data-i18n="dev.status">Open to opportunities</span>
+          </div>
+        </div>
+
+        <div class="dev-info">
+          <h3 class="dev-name">Bruno Kappi</h3>
+          <p class="dev-role" data-i18n="dev.role">Fullstack Developer &amp; Systems Analyst</p>
+          <p class="dev-location">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Novo Hamburgo, Rio Grande do Sul, Brazil
+          </p>
+
+          <p class="dev-bio" data-i18n="dev.bio">
+            With a background in both industrial automation and modern web development, Bruno brings a rare blend of technical depth and product vision to everything he builds. He believes software should be elegant, efficient, and most of all, useful.
+          </p>
+
+          <div class="dev-links">
+            <a href="https://myportfolio.bkappi.com/" target="_blank" class="dev-link portfolio">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              Portfolio
+            </a>
+            <a href="https://www.linkedin.com/in/brunokappi/" target="_blank" class="dev-link linkedin">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              LinkedIn
+            </a>
+            <a href="https://blog.bkappi.com/" target="_blank" class="dev-link blog">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+              Blog
+            </a>
+            <a href="https://github.com/BrunoKappi/vms-monitor" target="_blank" class="dev-link github">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+              GitHub
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========== CTA FINAL =========== -->
+  <section class="section cta-section">
+    <div class="container">
+      <div class="cta-card">
+        <div class="cta-glow"></div>
+        <div class="cta-content">
+          <h2 class="cta-title" data-i18n="cta.title">Ready to Monitor Your Cameras?</h2>
+          <p class="cta-desc" data-i18n="cta.desc">Free, open-source, and self-hosted. Deploy VMS Monitor on your own network in minutes.</p>
+          <div class="cta-actions">
+            <a href="https://github.com/BrunoKappi/vms-monitor" target="_blank" class="btn-primary large">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+              <span data-i18n="cta.github">Star on GitHub</span>
+            </a>
+          </div>
+          <p class="cta-license" data-i18n="cta.license">Open source &middot; MIT License &middot; No subscription required</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========== FOOTER =========== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <div class="brand-dot small"></div>
+          <span class="brand-name">VMS<span class="brand-accent">Monitor</span></span>
+        </div>
+        <p class="footer-copy">
+          Built by <a href="https://myportfolio.bkappi.com/" target="_blank">Bruno Kappi</a> &middot; 2025
+        </p>
+        <div class="footer-links">
+          <a href="https://github.com/BrunoKappi/vms-monitor" target="_blank">GitHub</a>
+          <a href="https://www.linkedin.com/in/brunokappi/" target="_blank">LinkedIn</a>
+          <a href="https://blog.bkappi.com/" target="_blank">Blog</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

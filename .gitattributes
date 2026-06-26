@@ -1,2 +1,0 @@
-# Garante que todos os scripts em lote (.bat) sempre usem quebras de linha CRLF do Windows no checkout
-*.bat text eol=crlf

@@ -44,3 +44,31 @@ temp/
 
 # VMS Repository Database Cache
 backend/data/cameras.json.bak
+backend/data/cameras.json
+
+frontend/graphify-out/
+backend/graphify-out/
+frontendRedirect/graphify-out/
+
+graphify-out/
+.agents/
+**/.agents/
+
+# Custom ignored files
+git
+agentsIgnore
+configFiles
+env
+.antigravityignore
+.claudeignore
+.geminiignore
+**/git
+**/agentsIgnore
+**/configFiles
+**/env
+**/.antigravityignore
+**/.claudeignore
+**/.geminiignore
+
+frontend/configFiles
+backend/configFiles
