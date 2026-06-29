@@ -73,3 +73,9 @@ env
 frontend/configFiles
 backend/configFiles
 kb_database.md
+
+# Automatically added agent and env ignores
+.env
+.env.development
+.env.production
+.graphifyignore
